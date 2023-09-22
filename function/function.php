@@ -43,40 +43,31 @@ function DBconnect()
         echo 'error connecting to database: ' . $e->getMessage();
         return null; // Return null to indicate a failed connection
     }
-}   
+}
 
-
-// get data from Cabinet table
-function GetInstrumentData() {
+function GetCategoryData()
+{
 
     $pdo = DBconnect();
 
-    $sql = "SELECT INSTRUMENTS FROM `devicestable`";
+    $sql = "SELECT Category FROM `devicestable` GROUP BY Category";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
-    $cabinetData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $cabinetData;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);;
 }
 
-// Call the function to retrieve cabinet data
-$cabinetData = GetInstrumentData();
+// get select data from devicestable instruments and make variable cabinetData
+function GetInstrumentData()
+{
 
-function getCategoryData($category) {
-    global $conn;
-    $category = $conn->real_escape_string($category);
-    $sql = "SELECT INSTRUMENTS FROM devicestable WHERE  = '$category'";
-    $result = $conn->query($sql);
+    $pdo = DBconnect();
 
-    $data = [];
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row['INSTRUMENTS'];
-    }
+    $sql = "SELECT instruments FROM `devicestable` GROUP BY instruments";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 
-    return $data;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-$category = 'Cabinet'; 
 
 ?>
