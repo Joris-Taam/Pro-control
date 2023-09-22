@@ -1,29 +1,31 @@
 <?php
 include '../function/function.php';
 
-$pdo = DBconnect();
-getCabinetData();
+if (isset($_GET['category'])) {
+    $selectedCategory = $_GET['category'];
 
+    $pdo = DBconnect(); 
 
-// Get the selected table and category from the AJAX request
-if (isset($_GET["table"]) && isset($_GET["category"])) {
-    $selectedTable = $_GET["table"];
-    $selectedCategory = $_GET["category"];
+    if ($pdo === null) {
+        echo json_encode([]);
+        exit();
+    }
 
-    // Modify your SQL query to retrieve data based on the selected table and category
-    $sql = "SELECT INSTRUMENTS FROM $selectedTable WHERE Category = :category";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(":category", $selectedCategory, PDO::PARAM_STR);
-    $stmt->execute();
+    try {
+        $query = "SELECT INSTRUMENTS FROM devicestable WHERE Category = :category";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':category', $selectedCategory, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Fetch data into an array
-    $categoryData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Extract the 'INSTRUMENTS' values into a simple array
+        $instrumentData = array_column($result, 'INSTRUMENTS');
 
-    // Create an array of the 'INSTRUMENTS' values
-    $instrumentNames = array_column($categoryData, 'INSTRUMENTS');
-
-    // Return the data as JSON
-    echo json_encode($instrumentNames);
+        echo json_encode($instrumentData);
+    } catch (\PDOException $e) {
+        echo json_encode([]);
+    }
+} else {
+    echo json_encode([]); 
 }
-
 ?>

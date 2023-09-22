@@ -3,9 +3,10 @@
 
 <head>
     <title>Document</title>
-    <?php include '../function/function.php';?>
+    <?php include '../function/function.php'; ?>
     <link rel="stylesheet" href="../Style.css">
 </head>
+
 <body>
     <!DOCTYPE html>
     <html>
@@ -38,9 +39,10 @@
         ?>
 
     </head>
-    <?php Navbar(); ?>
-    <?php InsertInto(); ?>
-    <?php getCabinetData() ?>
+    <?php Navbar(); ?> 
+    <?php GetInstrumentData(); ?> 
+
+
 
     <body id="input-body">
         <div class="input-container">
@@ -52,7 +54,7 @@
                     <tr>
                         <td>
                             <select id="category_name" name="category_name" onchange="loadCategoryData()">
-                                <option value="cabinet">Cabinet</option>
+                                <option value="Cabinet">Cabinet</option>
                                 <option value="flow_control">Flow control</option>
                                 <option value="flow_measurement">Flow measurement</option>
                                 <option value="generic">Generic</option>
@@ -81,19 +83,36 @@
         </div>
     </body>
     <script>
-function loadCategoryData() {
-    // Get the selected category from the first dropdown
-    var selectedCategory = document.getElementById("category_name").value;
+        function loadCategoryData() {
+            // Get the selected category from the first dropdown
+            var selectedCategory = document.getElementById("category_name").value;
 
-    // Get the selected table from the table dropdown
-    var selectedTable = document.getElementById("table_name").value;
-
-    // Send an AJAX request to a PHP script to fetch data
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "get_category_data.php?table=" + selectedTable + "&category=" + selectedCategory, true);
-}
-</script>
+            // Send an AJAX request to a PHP script to fetch data
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "get_category_data.php?&category=" + selectedCategory, true);
 
 
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Parse the JSON response from the PHP script
+                    var data = JSON.parse(xhr.responseText);
+
+                    // Populate the second dropdown with the retrieved data
+                    var categoryDataDropdown = document.getElementById("category_data");
+                    categoryDataDropdown.innerHTML = "";
+
+                    // Add new options to the second dropdown
+                    for (var i = 0; i < data.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = data[i];
+                        option.text = data[i];
+                        categoryDataDropdown.appendChild(option);
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+    </script>
 
     </html>
