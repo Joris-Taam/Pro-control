@@ -44,7 +44,7 @@ function DBconnect()
         return null; // Return null to indicate a failed connection
     }
 }
-
+// get from devicestable Category
 function GetCategoryData()
 {
 
@@ -57,17 +57,31 @@ function GetCategoryData()
     return $stmt->fetchAll(PDO::FETCH_ASSOC);;
 }
 
-// get select data from devicestable instruments and make variable cabinetData
+// get from devicestable instruments
 function GetInstrumentData()
 {
 
     $pdo = DBconnect();
 
-    $sql = "SELECT instruments FROM `devicestable` GROUP BY instruments";
+    $sql = "SELECT Instruments FROM `devicestable` GROUP BY Instruments";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// get from devicestable Price
+function GetPriceData()
+{
+
+    $pdo = DBconnect();
+
+    $sql = "SELECT Price FROM `devicestable` GROUP BY Price";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 ?>

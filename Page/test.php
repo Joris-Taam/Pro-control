@@ -5,6 +5,7 @@
     <title>Document</title>
     <?php include '../function/function.php'; ?>
     <link rel="stylesheet" href="../Style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -33,12 +34,17 @@
                             </select>
                         </td>
                         <td>
-                            <label for="category_name">Name:</label><br>
+                            <label for="category_name">Instrument:</label><br>
                             <select id="category_data" name="category_data">
                                 <?php foreach ($cabinetData as $row) : ?>
-                                    <option value="<?php echo htmlspecialchars($row['instruments']); ?>"><?php echo htmlspecialchars($row['instruments']); ?></option>
+                                    <option value="<?php echo htmlspecialchars($row['Instruments']); ?>"><?php echo htmlspecialchars($row['Instruments']); ?></option>
                                 <?php endforeach; ?>
                             </select>
+                        </td>
+
+                        <td>
+                            <label for="category_name">Price:</label><br>
+                            <span id="instrument_price"></span>
                         </td>
                     </tr>
                 </table>
@@ -76,6 +82,32 @@
 
             xhr.send();
         }
+
+        $(document).ready(function() {
+            // Attach an event listener to the select element
+            $('#category_data').change(function() {
+                // Get the selected instrument
+                var selectedInstrument = $(this).val();
+
+                // Make an AJAX request to fetch the price
+                $.ajax({
+                    type: 'GET',
+                    url: 'get_instrument_data.php', // Update this URL to the correct path
+                    data: {
+                        Instruments: selectedInstrument
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        // Update the price element with the fetched price
+                        $('#instrument_price').text(data.Price);
+                    },
+                    error: function() {
+                        // Handle any errors here
+                        $('#instrument_price').text('Price not available');
+                    }
+                });
+            });
+        });
     </script>
 
     </html>

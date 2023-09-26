@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="../Style.css">
 </head>
 <?php Navbar(); ?>
-<?php InsertInto(); ?>
-<?php getCabinetData() ?>
+
 
 <body id="input-body">
     <div class="input-container">
@@ -19,28 +18,18 @@
                 <!-- Category 1 -->
                 <tr>
                     <td>
-
-                        <select id="category_name" name="category_name">
-                            <option value="Cabinet">Cabinet</option>
-                            <option value="Flow control">Flow control</option>
-                            <option value="Flow measurement">Flow measurement</option>
-                            <option value="Generic">Generic</option>
-                            <option value="Motor">Motor</option>
-                            <option value="Option">Option</option>
-                            <option value="Pressure control">Pressure control</option>
-                            <option value="Level measurement">Level measurement</option>
-                            <option value="Pump">Pump</option>
-                            <option value="Switch">Switch</option>
-                            <option value="Temperature measurement">Temperature measurement</option>
-                            <option value="Valve">Valve</option>
-                            <option value="Others">Others</option>
+                        <select id="category_name" name="category_name" onchange="loadCategoryData()">
+                            <?php $InstrumentData = GetCategoryData(); ?>
+                            <?php foreach ($InstrumentData as $row) : ?>
+                                <option value="<?php echo htmlspecialchars($row['Category']); ?>"><?php echo htmlspecialchars($row['Category']); ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </td>
                     <td>
                         <label for="category_name">Name:</label><br>
-                        <select id="category_name" name="category_name">
+                        <select id="category_data" name="category_data">
                             <?php foreach ($cabinetData as $row) : ?>
-                                <option value="<?php echo htmlspecialchars($row['INSTRUMENTS']); ?>"><?php echo htmlspecialchars($row['INSTRUMENTS']); ?></option>
+                                <option value="<?php echo htmlspecialchars($row['Instruments']); ?>"><?php echo htmlspecialchars($row['Instruments']); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </td>
@@ -64,38 +53,19 @@
                 <!-- second section -->
                 <tr>
                     <td>
-
-                        <select id="category_name" name="category_name">
-                            <option value="Cabinet">Cabinet</option>
-                            <option value="Flow control">Flow control</option>
-                            <option value="Flow measurement">Flow measurement</option>
-                            <option value="Generic">Generic</option>
-                            <option value="Motor">Motor</option>
-                            <option value="Option">Option</option>
-                            <option value="Pressure control">Pressure control</option>
-                            <option value="Level measurement">Level measurement</option>
-                            <option value="Pump">Pump</option>
-                            <option value="Switch">Switch</option>
-                            <option value="Temperature measurement">Temperature measurement</option>
-                            <option value="Valve">Valve</option>
-                            <option value="Others">Others</option>
+                        <select id="category_name" name="category_name" onchange="loadCategoryData()">
+                            <?php $InstrumentData = GetCategoryData(); ?>
+                            <?php foreach ($InstrumentData as $row) : ?>
+                                <option value="<?php echo htmlspecialchars($row['Category']); ?>"><?php echo htmlspecialchars($row['Category']); ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </td>
                     <td>
-                        <select id="category_name" name="category_name">
-                            <option value="Cabinet">Cabinet</option>
-                            <option value="Flow control">Flow control</option>
-                            <option value="Flow measurement">Flow measurement</option>
-                            <option value="Generic">Generic</option>
-                            <option value="Motor">Motor</option>
-                            <option value="Option">Option</option>
-                            <option value="Pressure control">Pressure control</option>
-                            <option value="Level measurement">Level measurement</option>
-                            <option value="Pump">Pump</option>
-                            <option value="Switch">Switch</option>
-                            <option value="Temperature measurement">Temperature measurement</option>
-                            <option value="Valve">Valve</option>
-                            <option value="Others">Others</option>
+                        <label for="category_name">Name:</label><br>
+                        <select id="category_data" name="category_data">
+                            <?php foreach ($cabinetData as $row) : ?>
+                                <option value="<?php echo htmlspecialchars($row['Instruments']); ?>"><?php echo htmlspecialchars($row['Instruments']); ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </td>
                     <td>
@@ -337,9 +307,42 @@
     </div>
     </div>
     </div>
+    <?php Footer() ?>
 </body>
+<script>
+    function loadCategoryData() {
+        // Get the selected category from the first dropdown
+        var selectedCategory = document.getElementById("category_name").value;
+
+        // Send an AJAX request to a PHP script to fetch data
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "get_category_data.php?&category=" + selectedCategory, true);
+
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Parse the JSON response from the PHP script
+                var data = JSON.parse(xhr.responseText);
+
+                // Populate the second dropdown with the retrieved data
+                var categoryDataDropdown = document.getElementById("category_data");
+                categoryDataDropdown.innerHTML = "";
+
+                // Add new options to the second dropdown
+                for (var i = 0; i < data.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = data[i];
+                    option.text = data[i];
+                    categoryDataDropdown.appendChild(option);
+                }
+            }
+        };
+
+        xhr.send();
+    }
+</script>
 
 </html>
-<?php Footer() ?>
+
 
 </html>
