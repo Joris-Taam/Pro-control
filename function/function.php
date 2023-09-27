@@ -7,7 +7,7 @@ function Navbar()
     echo '<li class="navbar-logo"><a href="index.php"><img src="../Images/logo.png" alt="Logo"></a></li>';
     echo '<li><a href="index.php">Home</a></li>';
     echo '<li><a href="Edit.php">Edit</a></li>';
-    echo '<li><a href="Input.php">Input</a></li>';
+    echo '<li><a href="add.php">Add</a></li>';
     echo '</ul>';
     echo '</div>';
 }

@@ -49,40 +49,6 @@
                         <input type="text" id="category_price" name="category_price">
                     </td>
                 </tr>
-
-                <!-- second section -->
-                <tr>
-                    <td>
-                        <select id="category_name" name="category_name" onchange="loadCategoryData()">
-                            <?php $InstrumentData = GetCategoryData(); ?>
-                            <?php foreach ($InstrumentData as $row) : ?>
-                                <option value="<?php echo htmlspecialchars($row['Category']); ?>"><?php echo htmlspecialchars($row['Category']); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                    <td>
-                        <label for="category_name">Name:</label><br>
-                        <select id="category_data" name="category_data">
-                            <?php foreach ($cabinetData as $row) : ?>
-                                <option value="<?php echo htmlspecialchars($row['Instruments']); ?>"><?php echo htmlspecialchars($row['Instruments']); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                    <td>
-
-                        <select id="category_quantity" name="category_quantity">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" id="category_price" name="category_price">
-                    </td>
-                </tr>
             </table>
 
             <!-- Type of input / output -->

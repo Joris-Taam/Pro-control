@@ -11,12 +11,12 @@
     <?php Navbar(); ?>
     <div class="container">
         <div class="button-container">
-            <a href="Input.php" class="index-button">Add new record</a>
+            <a href="add.php" class="index-button">Add new record</a>
             <a href="Edit.php" class="index-button">Edit existing records</a>
         </div>
 
         <div class="history">
-            <?php history(); ?>
+           
       
 
             </div>

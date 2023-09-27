@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Document</title>
+    <title>Pro-Control</title>
     <?php include '../function/function.php'; ?>
     <link rel="stylesheet" href="../Style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -12,102 +12,49 @@
     <!DOCTYPE html>
     <html>
 
-    <head>
-        <title>Pro-control</title>
-    </head>
     <?php Navbar(); ?>
 
     <body id="input-body">
         <div class="input-container">
             <!-- from for the categories -->
-            <form>
-                <h1 class="margin">Categories</h1>
-                <table>
-                    <!-- Category 1 -->
-                    <tr>
-                        <td>
-                            <select id="category_name" name="category_name" onchange="loadCategoryData()">
-                                <?php $InstrumentData = GetCategoryData(); ?>
-                                <?php foreach ($InstrumentData as $row) : ?>
-                                    <option value="<?php echo htmlspecialchars($row['Category']); ?>"><?php echo htmlspecialchars($row['Category']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <td>
-                            <label for="category_name">Instrument:</label><br>
-                            <select id="category_data" name="category_data">
-                                <?php foreach ($cabinetData as $row) : ?>
-                                    <option value="<?php echo htmlspecialchars($row['Instruments']); ?>"><?php echo htmlspecialchars($row['Instruments']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
 
-                        <td>
-                            <label for="category_name">Price:</label><br>
-                            <span id="instrument_price"></span>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    </body>
-    <script>
-        function loadCategoryData() {
-            // Get the selected category from the first dropdown
-            var selectedCategory = document.getElementById("category_name").value;
+                <?php
 
-            // Send an AJAX request to a PHP script to fetch data
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "get_category_data.php?&category=" + selectedCategory, true);
+                $pdo = DBconnect();
 
+                if ($pdo) {
+                    $sql = "SELECT * FROM devicestable";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
 
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Parse the JSON response from the PHP script
-                    var data = JSON.parse(xhr.responseText);
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    // Populate the second dropdown with the retrieved data
-                    var categoryDataDropdown = document.getElementById("category_data");
-                    categoryDataDropdown.innerHTML = "";
+                    if (count($result) > 0) {
+                        echo "<table border='1'>";
+                        echo "<tr><th>ID</th><th>Category</th><th>Instruments</th><th>Price</th><th>Edit</th></tr>";
 
-                    // Add new options to the second dropdown
-                    for (var i = 0; i < data.length; i++) {
-                        var option = document.createElement("option");
-                        option.value = data[i];
-                        option.text = data[i];
-                        categoryDataDropdown.appendChild(option);
+                        foreach ($result as $row) {
+                            echo "<tr>";
+                            echo "<td>" . $row["id"] . "</td>";
+                            echo "<td>" . $row["Category"] . "</td>";
+                            echo "<td>" . $row["Instruments"] . "</td>";
+                            echo "<td>" . $row["Price"] . "</td>";
+                            echo "<td><a href='edit_single.php?id=" . $row["id"] . "'>Edit</a></td>";
+                            echo "</tr>";
+                        }
+
+                        echo "</table>";
+                    } else {
+                        echo "No records found.";
                     }
+                } else {
+                    echo "Database connection failed.";
                 }
-            };
 
-            xhr.send();
-        }
+                ?>
+        </div>
+        <?php Footer() ?>
+    </body>
 
-        $(document).ready(function() {
-            // Attach an event listener to the select element
-            $('#category_data').change(function() {
-                // Get the selected instrument
-                var selectedInstrument = $(this).val();
-
-                // Make an AJAX request to fetch the price
-                $.ajax({
-                    type: 'GET',
-                    url: 'get_instrument_data.php', // Update this URL to the correct path
-                    data: {
-                        Instruments: selectedInstrument
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        // Update the price element with the fetched price
-                        $('#instrument_price').text(data.Price);
-                    },
-                    error: function() {
-                        // Handle any errors here
-                        $('#instrument_price').text('Price not available');
-                    }
-                });
-            });
-        });
-    </script>
 
     </html>

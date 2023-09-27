@@ -5,33 +5,29 @@
 }
 
 /* Navbar */
-/* Style for the navigation bar */
 .navbar {
   background-color: #1d0b38;
   padding: 10px 0;
   text-decoration: none;
 }
 
-/* Style for the unordered list */
+
 .navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-/* Style for the list items */
 .navbar ul li {
   display: inline;
   margin-right: 20px;
 }
 
-/* Style for the logo */
 .navbar-logo img {
   height: 40px;
   vertical-align: middle;
 }
 
-/* Style for the navigation links */
 .navbar ul li a {
   text-decoration: none;
   color: #f29000;
@@ -105,7 +101,6 @@ div.category {
 }
 
 
-/* Add styles for labels and input fields */
 label {
   font-weight: bold;
   flex-basis: 20%; 
@@ -122,7 +117,7 @@ select {
   margin: 5px;
   box-sizing: border-box;
 }
-
+/* edit */
 
 /* Footer */
 footer {
