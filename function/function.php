@@ -44,6 +44,7 @@ function DBconnect()
         return null; // Return null to indicate a failed connection
     }
 }
+
 // get from devicestable Category
 function GetCategoryData()
 {
@@ -82,6 +83,5 @@ function GetPriceData()
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
 
 ?>

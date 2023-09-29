@@ -50,7 +50,7 @@
   color: #f29000;
   align-items: center;
   height: 50px;
-  margin-bottom: 20px;
+  margin-bottom:x 20px;
   margin-top: 20px;
   width: 1000px;
   text-decoration: none;
@@ -63,61 +63,115 @@
 
 .line {
   border-bottom: black 2px;
-  
 }
-/* Input.php */
+
+/* add.php */
+
 form {
-  max-width: 800px;
+  max-width: 70%;
   margin: 0 auto;
-  margin-bottom: 300px;
 }
+
+.quantity {
+  width: 60px;
+}
+
 .flexcontainer {
-  display: flex;
+  display: grid;
   justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
 }
 
 .inputcontainer,
 .hourcontainer {
-    flex: 1; 
-    padding: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
-.cablecontainer { 
+.inputcontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-align {
+  vertical-align: top;
+}
+
+.cablecontainer {
   margin-top: 50px;
 }
-.section {
-  display: inline-block;
-  margin-right: 20px;
+
+.hourcontainer table {
+  width: 100%;
 }
 
-div.category {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around ;
-  align-items: center;
-  margin-bottom: 20px;
+.hourcontainer table td {
+  width: 50%;
 }
-
+.hourcontainer table input[type="number"] {
+  width: 100%;
+}
 
 label {
+  display: flex;
   font-weight: bold;
-  flex-basis: 20%; 
-  text-align: right;
-  padding-right: 10px; 
+  flex-basis: 30%;
+  padding-right: 45px;
 }
 
 select,
 input[type="text"],
-input[type="checkbox"],
 select {
-  flex-basis: 30%; 
+  flex-basis: 40%;
   padding: 10px;
   margin: 5px;
   box-sizing: border-box;
 }
+
 /* edit */
+.container {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 50px 0px 80px 0px;
+}
+
+.border {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #1d0b38;
+}
+
+#edit_table th,
+#edit_table tr,
+#edit_table td {
+  border: 2px solid #1d0b38;
+  padding: 8px;
+  text-align: left;
+}
+
+#edit_table, td 
+ {
+  text-decoration: none;
+  color: #1d0b38;
+}
+#edit_table, a {
+  text-decoration: none;
+  color: #f29000;
+}
+
+#edit_table a:hover {
+  color: yellow;
+}
+
+#edit_table th {
+  background-color: #1d0b38;
+}
+
+
 
 /* Footer */
 footer {
