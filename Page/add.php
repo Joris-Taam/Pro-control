@@ -39,7 +39,7 @@
             <div class="inputcontainer">
                 <table>
                     <tr>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-DI">DI:</label>
                             <select name="quantity-DI" id="quantity-DI" class="quantity">
                                 <option value="0">0</option>
@@ -50,7 +50,7 @@
                                 <option value="5">5</option>
                             </select>
                         </td>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-DO">DO:</label>
                             <select name="quantity-DO" id="quantity-DO" class="quantity">
                                 <option value="0">0</option>
@@ -63,7 +63,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-AI">AI:</label>
                             <select name="quantity-AI" id="quantity-AI" class="quantity">
                                 <option value="0">0</option>
@@ -74,7 +74,7 @@
                                 <option value="5">5</option>
                             </select>
                         </td>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-AO">AO:</label>
                             <select name="quantity-AO" id="quantity-AO" class="quantity">
                                 <option value="0">0</option>
@@ -87,7 +87,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="vertical-align">
+                        <td >
                             <label for="quantity-TC">TC:</label>
                             <select name="quantity-TC" id="quantity-TC" class="quantity">
                                 <option value="0">0</option>
@@ -98,7 +98,7 @@
                                 <option value="5">5</option>
                             </select>
                         </td>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-PT100">PT100:</label>
                             <select name="quantity-PT100" id="quantity-PT100" class="quantity">
                                 <option value="0">0</option>
@@ -111,7 +111,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-TSA">TSA:</label>
                             <select name="quantity-TSA" id="quantity-TSA" class="quantity">
                                 <option value="0">0</option>
@@ -122,7 +122,7 @@
                                 <option value="5">5</option>
                             </select>
                         </td>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-FI">FI:</label>
                             <select name="quantity-FI" id="quantity-FI" class="quantity">
                                 <option value="0">0</option>
@@ -135,7 +135,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-RSxxx">RSxxx:</label>
                             <select name="quantity-RSxxx" id="quantity-RSxxx" class="quantity">
                                 <option value="0">0</option>
@@ -146,7 +146,7 @@
                                 <option value="5">5</option>
                             </select>
                         </td>
-                        <td class="vertical-align">
+                        <td>
                             <label for="quantity-TCP">TCP:</label>
                             <select name="quantity-TCP" id="quantity-TCP" class="quantity">
                                 <option value="0">0</option>
@@ -167,27 +167,27 @@
                 <table>
                     <tr>
                         <td><label for="pre-eng">Pre_Eng:</label></td>
-                        <td><input type="number" id="pre-eng" name="pre-eng" step="0.25" min="0" placeholder="0.00" required></td>
+                        <td><input type="number" id="pre-eng" name="pre-eng" step="0.05" min="0" placeholder="0.00" ></td>
                     </tr>
                     <tr>
                         <td><label for="paneel-uren">Paneel_Uren:</label></td>
-                        <td><input type="number" id="paneel-uren" name="paneel-uren" step="0.25" min="0" placeholder="0.00" required></td>
+                        <td><input type="number" id="paneel-uren" name="paneel-uren" step="0.05" min="0" placeholder="0.00" ></td>
                     </tr>
                     <tr>
                         <td><label for="software-plc">Software_PLC:</label></td>
-                        <td><input type="number" id="software-plc" name="software-plc" step="0.25" min="0" placeholder="0.00" required></td>
+                        <td><input type="number" id="software-plc" name="software-plc" step="0.05" min="0" placeholder="0.00" ></td>
                     </tr>
                     <tr>
                         <td><label for="software-hmi">Software_HMI:</label></td>
-                        <td><input type="number" id="software-hmi" name="software-hmi" step="0.25" min="0" placeholder="0.00" required></td>
+                        <td><input type="number" id="software-hmi" name="software-hmi" step="0.05" min="0" placeholder="0.00" ></td>
                     </tr>
                     <tr>
                         <td><label for="test-internal">Test_internal:</label></td>
-                        <td><input type="number" id="test-internal" name="test-internal" step="0.25" min="0" placeholder="0.00" required></td>
+                        <td><input type="number" id="test-internal" name="test-internal" step="0.05" min="0" placeholder="0.00" ></td>
                     </tr>
                     <tr>
                         <td><label for="mm_Din">mm_din</label></td>
-                        <td><input type="number" id="mm_Din" name="mm_Din" step="0.25" min="0" placeholder="0.00" required></td>
+                        <td><input type="number" id="mm_Din" name="mm_Din" step="0.05" min="0" placeholder="0.00" ></td>
                     </tr>
                 </table>
                 <!-- Cable types -->
@@ -212,7 +212,7 @@
                         </tr>
                     </table>
                 </div>
-                <input type="submit" value="Submit">
+                <input id="update" type="submit" value="Submit">
     </form>
     </div>
     </div>

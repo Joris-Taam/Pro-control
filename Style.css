@@ -33,6 +33,9 @@
   color: #f29000;
   font-size: 20px;
 }
+.navbar a:hover {
+  color: yellow;
+}
 
 /* Index.php */
 
@@ -95,9 +98,6 @@ form {
   flex-direction: row;
 }
 
-.vertical-align {
-  vertical-align: top;
-}
 
 .cablecontainer {
   margin-top: 50px;
@@ -171,8 +171,28 @@ select {
   background-color: #1d0b38;
 }
 
+.margin { 
+  margin-bottom: 50px;
+}
+/* edit single */
 
-
+#edit_single_table 
+#input,
+input[type="text"],
+#input {
+  flex-basis: 40%;
+  padding: 8px;
+  margin: 1px;
+  box-sizing: border-box;
+}
+#update:hover { 
+  color: yellow;
+}
+#update {
+  color: #f29000;
+  background-color: #1d0b38;
+  font-weight:bold;
+}
 /* Footer */
 footer {
   position: fixed;
