@@ -23,6 +23,7 @@
     Category = :category,
     Instruments = :instruments,
     Price = :price,
+    Description = :Description,
     DI = :di,
     DO = :do_val, 
     AI = :ai,
@@ -47,6 +48,7 @@
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':category', $_POST['newCategory'], PDO::PARAM_STR);
                 $stmt->bindParam(':instruments', $_POST['newInstruments'], PDO::PARAM_STR);
+                $stmt->bindParam(':Description', $_POST['newDescription'], PDO::PARAM_STR);
                 $stmt->bindParam(':price', $_POST['newPrice'], PDO::PARAM_STR);
                 $stmt->bindParam(':di', $_POST['newDI'], PDO::PARAM_STR);
                 $stmt->bindParam(':do_val', $_POST['nowDO'], PDO::PARAM_STR); 
@@ -92,20 +94,24 @@
 
                 if ($row) {
     ?>
-                    <form class="margin" method="POST" action="">
+                    <form class="margin" method="POST" action="insert_data.php">
                         <table>
                             <tr>
                                 <td>
                                     <label for="newCategory">Category:</label>
-                                    <input type="text" id="newCategory" name="newCategory" value="<?= $row['Category'] ?>"><br>
+                                    <input type="text" id="newCategory" name="newCategory" value="<?= $row['Category'] ?>" placeholder="change the category name"><br>
                                 </td>
                                 <td>
                                     <label for="newInstruments">Instruments:</label>
-                                    <input type="text" id="newInstruments" name="newInstruments" value="<?= $row['Instruments'] ?>"><br>
+                                    <input type="text" id="newInstruments" name="newInstruments" value="<?= $row['Instruments'] ?>" placeholder="Change the instrument name"><br>
                                 </td>
                                 <td>
                                     <label for="newPrice">Price:</label>
-                                    <input type="text" id="newPrice" name="newPrice" value="<?= $row['Price'] ?>"><br>
+                                    <input type="text" id="newPrice" name="newPrice" value="<?= $row['Price'] ?>" placeholder="Change the price"><br>
+                                </td>
+                                <td>
+                                    <label for="newDescription">Description:</label>
+                                    <input type="text" id="newPrice" name="newDescription" value="<?= $row['Description'] ?>" placeholder="Change the description"><br>
                                 </td>
                             </tr>
                         </table>

@@ -30,7 +30,11 @@
                 </td>
                 <td id="add_category">
                     <label for="category_price">Price</label><br>
-                    <input type="text" name="category_Price" id="category_price" placeholder="De price of the instrument" name="category_price" required>
+                    <input type="text" name="category_Price" id="category_price" placeholder="De price of the instrument"  required>
+                </td>
+                <td id="add_category">
+                    <label for="description">Description</label><br>
+                    <input type="text" name="Description" id="category_price" placeholder="Description of the category" required>
                 </td>
             </tr>
         </table>
