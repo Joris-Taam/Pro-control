@@ -28,22 +28,22 @@
                     <input type="hidden" name="id_to_delete" value="<?= $id_to_delete ?>">
                     <table>
         <tr>
-            <td>
+        <td>
                 <label for="newCategory">Category:</label>
-                <input type="text" id="newCategory" name="category" value="<?= $record['Category'] ?>" placeholder="change the category name"><br>
+                <span><?= $record['Category'] ?></span><br>
             </td>
             <td>
                 <label for="newInstruments">Instruments:</label>
-                <input type="text" id="newInstruments" name="Instruments" value="<?= $record['Instruments'] ?>" placeholder="Change the instrument name"><br>
+                <span><?= $record['Instruments'] ?> </span>
             </td>
             <td>
                 <label for="newPrice">Price:</label>
-                <input type="text" id="newPrice" name="Price" value="<?= $record['Price'] ?>" placeholder="Change the price"><br>
+                <span> <?= $record['Price'] ?> </span>
             </td>
             <td>
                 <label for="newDescription">Description:</label>
-                <input type="text" id="newPrice" name="Description" value="<?= $record['Description'] ?>" placeholder="Change the description"><br>
-            </td>
+                <span> <?= $record['Description'] ?> </span> 
+             </td>
         </tr>
     </table>
     <div class="flexcontainer">
@@ -52,51 +52,51 @@
                 <tr>
                     <td>
                         <label for="newDO">Di:</label>
-                        <input type="text" id="newDO" name="inout-DO" value="<?= $record['DI'] ?>"><br>
+                        
                     </td>
                     <td>
                         <label for="nowDO">DO:</label>
-                        <input type="text" id="nowDO" name="inout-DO" value="<?= $record['DO'] ?>"><br>
+                        <span> <?= $record['DO'] ?> </span> 
                     </td>
                 <tr>
                 <tr>
                     <td>
                         <label for="newAI">AI:</label>
-                        <input type="text" id="newAI" name="inout-AI" value="<?= $record['AI'] ?>"><br>
+                        <span> <?= $record['AI'] ?> </span> 
                     </td>
                     <td>
                         <label for="newAO">AO:</label>
-                        <input type="text" id="newAO" name="inout-AO" value="<?= $record['AO'] ?>"><br>
+                        <span> <?= $record['AO'] ?> </span> 
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="newTC">TC:</label>
-                        <input type="text" id="newTC" name="inout-TC" value="<?= $record['TC'] ?>"><br>
+                        <span> <?= $record['TC'] ?> </span> 
                     </td>
                     <td>
                         <label for="newPT100">PT100:</label>
-                        <input type="text" id="newPT100" name="inout-PT100" value="<?= $record['PT100'] ?>"><br>
+                        <span> <?= $record['PT100'] ?> </span> 
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="newTSA">TSA:</label>
-                        <input type="text" id="newTSA" name="inout-TSA" value="<?= $record['TSA'] ?>"><br>
+                        <span> <?= $record['TSA'] ?> </span> 
                     </td>
                     <td>
                         <label for="newFI">FI:</label>
-                        <input type="text" id="newFI" name="inout-FI" value="<?= $record['FI'] ?>"><br>
+                        <span> <?= $record['FI'] ?> </span> 
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="newRSxxx">RSxxx:</label>
-                        <input type="text" id="newRSxxx" name="inout-RSxxx" value="<?= $record['RSxxx'] ?>"><br>
+                        <span> <?= $record['RSxxx'] ?> </span> 
                     </td>
                     <td>
                         <label for="newTCP">TCP:</label>
-                        <input type="text" id="newTCP" name="inout-TCP" value="<?= $record['TCP'] ?>"><br>
+                        <span> <?= $record['TCP'] ?> </span> 
                     </td>
                 </tr>
             </table>
@@ -105,24 +105,29 @@
             <h1>Hours work time</h1>
             <table id="edit_single_table">
                 <tr>
-                    <td><label for="newpre_eng">pre_eng:</label></td>
-                    <td><input type="text" id="newpre_eng" name="pre_eng" value="<?= $record['Pre_Eng'] ?>"></td>
+                    <td><label for="newpre_eng">pre_eng:</label>
+                    <span> <?= $record['Pre_Eng'] ?> </span> 
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="newpaneel_uren">paneel_uren:</label></td>
-                    <td><input type="text" id="newpaneel_uren" name="paneel_uren" value="<?= $record['Paneel_Uren'] ?>"></td>
+                    <td><label for="newpaneel_uren">paneel_uren:</label>
+                    <span> <?= $record['Paneel_Uren'] ?> </span> 
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="newsoftware_PLC">software_PLC:</label></td>
-                    <td><input type="text" id="newsoftware_PLC" name="software_PLC" value="<?= $record['Software_PLC'] ?>"></td>
+                    <td><label for="newsoftware_PLC">software_PLC:</label>
+                    <span> <?= $record['Software_PLC'] ?> </span> 
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="newsoftware_HMI">software_HMI:</label></td>
-                    <td><input type="text" id="newsoftware_HMI" name="software_HMI" value="<?= $record['Software_HMI'] ?>"></td>
+                    <td><label for="newsoftware_HMI">software_HMI:</label>
+                    <span> <?= $record['Software_HMI'] ?> </span> 
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="test_internal">test_internal:</label></td>
-                    <td><input type="text" id="test_internal" name="test_internal" value="<?= $record['Test_internal'] ?>"></td>
+                    <td><label for="test_internal">test_internal:</label>
+                    <span> <?= $record['Test_internal'] ?> </span> 
+                    </td>
                 </tr>
             </table>
             <div class="cablecontainer">
@@ -130,18 +135,18 @@
                 <table>
                     <tr>
                         <td> <label for="newmm_Din">mm_Din:</label>
-                        <td> <input type="text" id="newmm_Din" name="mm_Din" value="<?= $record['mm_Din'] ?>">
+                        <td> <span> <?= $record['mm_Din'] ?> </span> 
                     <tr>
                         <td> <label for="newconnector_signal">connector_signal:</label>
-                        <td> <input type="text" id="newconnector_signal" name="connector_signal" value="<?= $record['Connector_Signal'] ?>">
+                        <td> <span> <?= $record['Connector_Signal'] ?> </span> 
                     </tr>
                     <tr>
                         <td> <label for="newcable_signal">cable_signal:</label>
-                        <td> <input type="text" id="newcable_signal" name="cable_signal" value="<?= $record['Cable_signal'] ?>">
+                        <td> <span> <?= $record['Cable_signal'] ?> </span> 
                     </tr>
                     <tr>
                         <td> <label for="newCable_Simple">Cable_Simple:</label>
-                        <td> <input type="text" id="newCable_Simple" name="Cable_Simple" value="<?= $record['Cable_simple'] ?>">
+                        <td> <span> <?= $record['Cable_simple'] ?> </span> 
                     </tr>
                 </table>
                     <input id="delete" type="submit" name="delete" value="Delete">
