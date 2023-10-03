@@ -7,4 +7,5 @@
 <?php
 navbar();
 InsertData();
+Footer();
 ?>

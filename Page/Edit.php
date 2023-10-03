@@ -35,6 +35,7 @@
                  <th><a href='?orderby=Instruments&orderdir=" . ($orderBy === 'Instruments' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Instruments</a></th>
                  <th><a href='?orderby=Price&orderdir=" . ($orderBy === 'Price' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Price</a></th>
                  <th>Edit</th>
+                 <th>Delete</th>
              </tr>";
 
                 foreach ($result as $row) {
@@ -43,6 +44,7 @@
                     echo "<td>" . $row["Instruments"] . "</td>";
                     echo "<td>" . $row["Price"] . "</td>";
                     echo "<td><a  href='edit_single.php?id=" . $row["id"] . "'>Edit</a></td>";
+                    echo "<td><a  href='delete_single.php?id=" . $row["id"] . "'>Delete</a></td>";
                     echo "</tr>";
                 }
 

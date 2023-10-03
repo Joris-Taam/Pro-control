@@ -93,8 +93,8 @@
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($row) {
-    ?>
-                    <form class="margin" method="POST" action="insert_data.php">
+    ?>       
+                    <form class="margin" method="POST" action="edit_data.php">
                         <table>
                             <tr>
                                 <td>
@@ -111,7 +111,7 @@
                                 </td>
                                 <td>
                                     <label for="newDescription">Description:</label>
-                                    <input type="text" id="newPrice" name="newDescription" value="<?= $row['Description'] ?>" placeholder="Change the description"><br>
+                                    <input type="text" id="newDescription" name="newDescription" value="<?= $row['Description'] ?>" placeholder="Change the description"><br>
                                 </td>
                             </tr>
                         </table>
@@ -121,11 +121,11 @@
                                     <tr>
                                         <td>
                                             <label for="newDO">Di:</label>
-                                            <input type="text" id="newDO" name="newDO" value="<?= $row['DI'] ?>"><br>
+                                            <input type="text" id="newDI" name="newDI" value="<?= $row['DI'] ?>"><br>
                                         </td>
                                         <td>
                                             <label for="nowDO">DO:</label>
-                                            <input type="text" id="nowDO" name="nowDO" value="<?= $row['DO'] ?>"><br>
+                                            <input type="text" id="nowDO" name="newDO" value="<?= $row['DO'] ?>"><br>
                                         </td>
                                     <tr>
                                     <tr>
@@ -191,7 +191,7 @@
                                         </tr>
                                         <tr>
                                             <td><label for="test_internal">test_internal:</label></td>
-                                            <td><input type="text" id="test_internal" name="test_internal" value="<?= $row['Test_internal'] ?>"></td>
+                                            <td><input type="text" id="test_internal" name="newtest_internal" value="<?= $row['Test_internal'] ?>"></td>
                                         </tr>
                                 </table>
                                     <div class="cablecontainer">

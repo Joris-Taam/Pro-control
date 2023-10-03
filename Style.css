@@ -59,15 +59,6 @@
   text-decoration: none;
 }
 
-/* history container */
-.history {
-  margin-bottom: 20px;
-}
-
-.line {
-  border-bottom: black 2px;
-}
-
 /* add.php */
 
 form {
@@ -189,6 +180,14 @@ input[type="text"],
   color: yellow;
 }
 #update {
+  color: #f29000;
+  background-color: #1d0b38;
+  font-weight:bold;
+}
+#delete:hover { 
+  color: yellow;
+}
+#delete {
   color: #f29000;
   background-color: #1d0b38;
   font-weight:bold;

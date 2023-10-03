@@ -83,8 +83,9 @@ function GetPriceData()
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-function InsertData() 
-{
+
+
+function InsertData() {
     
 $pdo = null;
 
@@ -168,36 +169,86 @@ try {
 }
 }
 
-function DeleteRow() 
-{
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+function EditData() {
     
-    DBconnect();
+    $pdo = null;
     
-    $pdo = mysqli_connect("hostname", "username", "password", "database");
-
-    if (!$pdo) {
-        die("Database connection failed: " . mysqli_connect_error());
-    }
-
-    // Check if the "delete" button was clicked
-    if (isset($_POST["delete"])) {
-        $idToDelete = $_GET["id"];
-
-        $deleteQuery = "DELETE FROM devicestable WHERE id = $idToDelete";
-
-        $result = mysqli_query($pdo, $deleteQuery);
-
-        if ($result) {
-            echo "Row deleted successfully.";
-        } else {
-            echo "Error deleting row: " . mysqli_error($pdo);
+    try {
+        // Establish a database connection
+        $pdo = DBconnect();
+    
+        // Handle form submission
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Get data from the form
+            $Category = $_POST['newCategory'];
+            $Instruments = $_POST['newInstruments'];
+            $Price = $_POST['newPrice'];
+            $Description = $_POST['newDescription'];
+            $DI = $_POST["newDI"];
+            $DO = $_POST["newDO"];
+            $AI = $_POST["newAI"];
+            $AO = $_POST["newAO"];
+            $TC = $_POST["newTC"];
+            $PT100 = $_POST["newPT100"];
+            $TSA = $_POST["newTSA"];
+            $FI = $_POST["newFI"];
+            $RSxxx = $_POST["newRSxxx"];
+            $TCP = $_POST["newTCP"];
+            $Pre_Eng = $_POST['newpre_eng'];
+            $Paneel_Uren = $_POST['newpaneel_uren'];
+            $Software_PLC = $_POST['newsoftware_PLC'];
+            $Software_HMI = $_POST['newsoftware_HMI'];
+            $Test_internal = $_POST['newtest_internal'];
+            $mm_Din = $_POST['newmm_Din'];
+            $Cable_signal = $_POST['newcable_signal'];
+            $Connector_Signal = $_POST['newcable_signal'];
+            $Cable_simple = $_POST['newconnector_signal'];
+            $Connector_Simple = $_POST['newCable_Simple'];
+    
+            // Construct the SQL query
+            $sql = "INSERT INTO devicestable (Category, Instruments, Price, Description, DI, DO, AI, AO, TC, PT100, TSA, FI, RSxxx, TCP, Pre_Eng, Paneel_Uren, Software_PLC, Software_HMI, Test_internal, mm_Din, Cable_signal, Connector_Signal, Cable_simple, Connector_Simple)
+                    VALUES (:Category, :Instruments, :Price, :Description, :DI, :DO, :AI, :AO, :TC, :PT100, :TSA, :FI, :RSxxx, :TCP, :Pre_Eng, :Paneel_Uren, :Software_PLC, :Software_HMI, :Test_internal, :mm_Din, :Cable_signal, :Connector_Signal, :Cable_simple, :Connector_Simple)";
+    
+            // Prepare the SQL statement
+            $stmt = $pdo->prepare($sql);
+    
+            // Bind parameters
+            $stmt->bindParam(':Category', $Category);
+            $stmt->bindParam(':Instruments', $Instruments);
+            $stmt->bindParam(':Price', $Price);
+            $stmt->bindParam(':Description', $Description);
+            $stmt->bindParam(':DI', $DI);
+            $stmt->bindParam(':DO', $DO);
+            $stmt->bindParam(':AI', $AI);
+            $stmt->bindParam(':AO', $AO);
+            $stmt->bindParam(':TC', $TC);
+            $stmt->bindParam(':PT100', $PT100);
+            $stmt->bindParam(':TSA', $TSA);
+            $stmt->bindParam(':FI', $FI);
+            $stmt->bindParam(':RSxxx', $RSxxx);
+            $stmt->bindParam(':TCP', $TCP);
+            $stmt->bindParam(':Pre_Eng', $Pre_Eng);
+            $stmt->bindParam(':Paneel_Uren', $Paneel_Uren);
+            $stmt->bindParam(':Software_PLC', $Software_PLC);
+            $stmt->bindParam(':Software_HMI', $Software_HMI);
+            $stmt->bindParam(':Test_internal', $Test_internal);
+            $stmt->bindParam(':mm_Din', $mm_Din);
+            $stmt->bindParam(':Cable_signal', $Cable_signal);
+            $stmt->bindParam(':Connector_Signal', $Connector_Signal);
+            $stmt->bindParam(':Cable_simple', $Cable_simple);
+            $stmt->bindParam(':Connector_Simple', $Connector_Simple);
+    
+            // Execute the statement
+            $stmt->execute();
+    
+            echo "Record inserted successfully.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    } finally {
+        // Close the database connection
+        if ($pdo !== null) {
+            $pdo = null;
         }
     }
-
-    mysqli_close($pdo);
-}
-
-}
-
+    }
