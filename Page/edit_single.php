@@ -70,13 +70,16 @@
                 $stmt->bindParam(':connector_signal', $_POST['newconnector_signal'], PDO::PARAM_STR);
                 $stmt->bindParam(':cable_simple', $_POST['newCable_Simple'], PDO::PARAM_STR);
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                
 
                 if ($stmt->execute()) {
-                    echo "Record updated successfully. <a href='edit.php'>Back to List</a>";
+                    echo '<script>
+                        alert("Record edited successfully.");
+                        window.location.href = "edit.php"; 
+                    </script>';
                 } else {
                     echo "Error updating record: " . $stmt->errorInfo()[2];
                 }
+                
             } else {
                 echo "Database connection failed.";
             }
@@ -94,7 +97,7 @@
 
                 if ($row) {
     ?>       
-                    <form class="margin" method="POST" action="edit_data.php">
+                    <form class="margin" method="POST" action="">
                         <table>
                             <tr>
                                 <td>
@@ -120,7 +123,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <label for="newDO">Di:</label>
+                                            <label for="newDI">Di:</label>
                                             <input type="text" id="newDI" name="newDI" value="<?= $row['DI'] ?>"><br>
                                         </td>
                                         <td>
@@ -220,6 +223,7 @@
                     </div>
                     </div>
     <?php
+    
                 } else {
                     echo "Record not found.";
                 }
