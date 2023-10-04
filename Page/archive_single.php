@@ -14,18 +14,18 @@
 
     try {
         if (isset($_GET['id'])) {
-            $id_to_delete = $_GET['id'];
+            $id_archive = $_GET['id'];
 
             // Retrieve and display the record with the specified ID
             $stmt = $pdo->prepare("SELECT * FROM devicestable WHERE id = :id");
-            $stmt->bindParam(':id', $id_to_delete, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id_archive, PDO::PARAM_INT);
             $stmt->execute();
             $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($record) {
                 ?>
-                <form class="margin" method="POST" action="">
-                    <input type="hidden" name="id_to_delete" value="<?= $id_to_delete ?>">
+                <form class="margin">
+                    <input type="hidden" name="id_archive" value="<?= $id_archive ?>">
                     <table>
         <tr>
         <td>
@@ -149,27 +149,32 @@
                         <td> <span> <?= $record['Cable_simple'] ?> </span> 
                     </tr>
                 </table>
-                    <input id="delete" type="submit" name="delete" value="Delete">
+                    <a href='edit.php?id=<?= $id_archive ?>&archive=true'>Archive</a>
                 </form>
                 <?php
+                
 
-                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
-                    // Handle the deletion of the record
-                    $id_to_delete = $_POST['id_to_delete'];
-                    $stmt = $pdo->prepare("DELETE FROM devicestable WHERE id = :id");
-                    $stmt->bindParam(':id', $id_to_delete, PDO::PARAM_INT);
+                if (isset($_GET['archive']) && isset($_GET['id'])) {
+                    $archive = $_GET['archive'] === 'true' ? true : false;
+                    $id = $_GET['id'];
 
+                    $sql = "UPDATE devicestable SET IsArchived = :archive WHERE id = :id";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':archive', $archive, PDO::PARAM_BOOL);
+                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    
                     if ($stmt->execute()) {
                         echo '<script>
-                            alert("Record with ID ' . $id_to_delete . ' deleted successfully.");
+                            alert("Record with ID ' . $id_archive . ' deleted successfully.");
                             window.location.href = "edit.php"; 
+                            
                         </script>';
                     } else {
-                        echo '<script>alert("Error deleting record with ID ' . $id_to_delete . '.");</script>';
+                        echo '<script>alert("Error deleting record with ID ' . $id_archive . '.");</script>';
                     }
                 }
             } else {
-                echo "Record with ID $id_to_delete not found.";
+                echo "Record with ID $id_archive not found.";
             }
         } else {
             echo "No ID specified for deletion.";

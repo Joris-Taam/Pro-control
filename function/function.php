@@ -8,6 +8,7 @@ function Navbar()
     echo '<li><a href="index.php">Home</a></li>';
     echo '<li><a href="Edit.php">Edit</a></li>';
     echo '<li><a href="add.php">Add</a></li>';
+    echo '<li><a href="archive.php">archive</a></li>';
     echo '</ul>';
     echo '</div>';
 }
