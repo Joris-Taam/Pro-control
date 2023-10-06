@@ -149,8 +149,8 @@
                         <td> <span> <?= $record['Cable_simple'] ?> </span> 
                     </tr>
                 </table>
-                    <a href='edit.php?id=<?= $id_archive ?>&archive=true'>Archive</a>
                 </form>
+                <a id="updated" href='edit.php?id=<?= $id_archive ?>&archive=true'>Archive</a>
                 <?php
                 
 

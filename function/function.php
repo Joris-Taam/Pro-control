@@ -6,9 +6,10 @@ function Navbar()
     echo '<ul>';
     echo '<li class="navbar-logo"><a href="index.php"><img src="../Images/logo.png" alt="Logo"></a></li>';
     echo '<li><a href="index.php">Home</a></li>';
-    echo '<li><a href="Edit.php">Edit</a></li>';
     echo '<li><a href="add.php">Add</a></li>';
-    echo '<li><a href="archive.php">archive</a></li>';
+    echo '<li><a href="Edit.php">Edit</a></li>';
+ 
+    echo '<li><a href="archive.php">Archive</a></li>';
     echo '</ul>';
     echo '</div>';
 }
@@ -205,6 +206,7 @@ function EditData() {
             $Connector_Signal = $_POST['newcable_signal'];
             $Cable_simple = $_POST['newconnector_signal'];
             $Connector_Simple = $_POST['newCable_Simple'];
+            
     
             // Construct the SQL query
             $sql = "INSERT INTO devicestable (Category, Instruments, Price, Description, DI, DO, AI, AO, TC, PT100, TSA, FI, RSxxx, TCP, Pre_Eng, Paneel_Uren, Software_PLC, Software_HMI, Test_internal, mm_Din, Cable_signal, Connector_Signal, Cable_simple, Connector_Simple)
@@ -253,4 +255,7 @@ function EditData() {
         }
     }
     }
+
+
+    ?>
 

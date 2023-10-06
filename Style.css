@@ -38,10 +38,17 @@
 }
 
 /* Index.php */
+.container { 
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 
 /* button container */
 .button-container {
   display: flex;
+  margin-bottom: 50px;
   flex-direction: column;
   max-width: 80%;
 }
@@ -58,6 +65,8 @@
   width: 1000px;
   text-decoration: none;
 }
+
+
 
 /* add.php */
 
@@ -149,7 +158,7 @@ select {
   text-decoration: none;
   color: #1d0b38;
 }
-#edit_table, a {
+#edit_table, #edit_table a {
   text-decoration: none;
   color: #f29000;
 }
@@ -183,6 +192,14 @@ input[type="text"],
   color: #f29000;
   background-color: #1d0b38;
   font-weight:bold;
+}
+#updated { 
+  margin-top:5px;
+  padding: 4px;
+  background-color: #1d0b38;
+  color: #f29000;
+  text-decoration: none;
+
 }
 #delete:hover { 
   color: yellow;

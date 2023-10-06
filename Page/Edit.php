@@ -51,6 +51,7 @@
                          <th><a href='?orderby=Category&orderdir=" . ($orderBy === 'Category' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Category</a></th>
                          <th><a href='?orderby=Instruments&orderdir=" . ($orderBy === 'Instruments' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Instruments</a></th>
                          <th><a href='?orderby=Price&orderdir=" . ($orderBy === 'Price' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Price</a></th>
+                         <th><a href='?orderby=AddedTime&orderdir=" . ($orderBy === 'Added_Time' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Added Time</a></th>
                          <th>Edit</th>
                          <th>Archive</th>
                      </tr>";
@@ -59,7 +60,8 @@
                         echo "<tr>";
                         echo "<td>" . $row["Category"] . "</td>";
                         echo "<td>" . $row["Instruments"] . "</td>";
-                        echo "<td>" . $row["Price"] . "</td>";
+                        echo "<td>€" . $row["Price"] . "</td>";
+                        echo "<td>" . $row["Added_Time"] . "</td>";
                         echo "<td><a href='edit_single.php?id=" . $row["id"] . "'>Edit</a></td>";
 
                         // Check if the record is archived, and provide the appropriate link
