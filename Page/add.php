@@ -3,8 +3,8 @@
 
 <head>
     <title>Pro-control</title>
-    <?php include '../function/function.php'; ?>
-    <link rel="stylesheet" href="../Style.css">
+    <?php include './function/function.php'; ?>
+    <link rel="stylesheet" href="./Style.css">
 </head>
 <?php Navbar(); ?>
 
@@ -15,27 +15,44 @@
         <table>
             <!-- Category 1 -->
             <tr>
-                <td id="add_category">
-                    <label for="category_name">Category</label><br>
-                    <select id="category_name" name="category_name" onchange="loadCategoryData()">
-                        <?php $InstrumentData = GetCategoryData(); ?>
-                        <?php foreach ($InstrumentData as $row) : ?>
-                            <option value="<?php echo htmlspecialchars($row['Category']); ?>"><?php echo htmlspecialchars($row['Category']); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </td>
-                <td id="add_category">
-                    <label for="category_name">Instrument</label><br>
-                    <input type="text" name="category_data" id="category_price" placeholder="The name of instrument" required>
-                </td>
-                <td id="add_category">
-                    <label for="category_price">Price</label><br>
-                    <input type="text" name="category_Price" id="category_price" placeholder="De price of the instrument"  required>
-                </td>
-                <td id="add_category">
-                    <label for="description">Description</label><br>
-                    <input type="text" name="Description" id="category_price" placeholder="Description of the category" required>
-                </td>
+            <td>
+    <label for="table_name">Select Table:</label>
+    <select id="table_name" name="table_name" onchange="loadCategoryData()">
+        <option value="cabinet_devices">Cabinet Devices</option>
+        <option value="field_devices">Field Devices</option>
+    </select>
+</td>
+<td>
+    <label for="category_name">Category</label><br>
+    <select id="category_name" name="category_name">
+        <option value="Cabinet">Cabinet</option>
+        <option value="Flow control">Flow control</option>
+        <option value="Flow measurement">Flow measurement</option>
+        <option value="Generic">Generic</option>
+        <option value="Heating">Heating</option>
+        <option value="Motor">Motor</option>
+        <option value="Option">Option</option>
+        <option value="Pressure control">Pressure control</option>
+        <option value="Switch">Switch</option>
+        <option value="Valve">Valve</option>
+        <option value="Switch">Switch</option>
+        <option value="Others">Others</option>
+        <option value="Pump">Pump</option>
+    </select>
+</td>
+<td>
+    <label for="category_data">Instrument</label><br>
+    <input type="text" name="category_data" id="category_data" placeholder="The name of instrument" required>
+</td>
+<td>
+    <label for="category_Price">Price</label><br>
+    <input type="text" name="category_Price" id="category_Price" placeholder="De price of the instrument" required>
+</td>
+<td>
+    <label for="Description">Description</label><br>
+    <input type="text" name="Description" id="Description" placeholder="Description of the category" required>
+</td>
+
             </tr>
         </table>
         <!--  input / output -->
@@ -224,36 +241,37 @@
     <?php Footer() ?>
 </body>
 <script>
-    function loadCategoryData() {
-        // Get the selected category from the first dropdown
-        var selectedCategory = document.getElementById("category_name").value;
+function loadCategoryData() {
+    // Get the selected table and category
+    var selectedTable = document.getElementById("table_name").value;
+    var selectedCategory = document.getElementById("category_name").value;
 
-        // Send an AJAX request to a PHP script to fetch data
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "get_category_data.php?&category=" + selectedCategory, true);
+    // Send an AJAX request to a PHP script to fetch data
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "get_category_data.php?table=" + selectedTable + "&category=" + selectedCategory, true);
 
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Parse the JSON response from the PHP script
+            var data = JSON.parse(xhr.responseText);
 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Parse the JSON response from the PHP script
-                var data = JSON.parse(xhr.responseText);
+            // Populate the second dropdown with the retrieved data
+            var categoryDataDropdown = document.getElementById("category_data");
+            categoryDataDropdown.innerHTML = "";
 
-                // Populate the second dropdown with the retrieved data
-                var categoryDataDropdown = document.getElementById("category_data");
-                categoryDataDropdown.innerHTML = "";
-
-                // Add new options to the second dropdown
-                for (var i = 0; i < data.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = data[i];
-                    option.text = data[i];
-                    categoryDataDropdown.appendChild(option);
-                }
+            // Add new options to the second dropdown
+            for (var i = 0; i < data.length; i++) {
+                var option = document.createElement("option");
+                option.value = data[i];
+                option.text = data[i];
+                categoryDataDropdown.appendChild(option);
             }
-        };
+        }
+    };
 
-        xhr.send();
-    }
+    xhr.send();
+}
+
 </script>
 
 </html>

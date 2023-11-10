@@ -3,8 +3,8 @@
 
 <head>
     <title>Delete Record</title>
-    <?php include '../function/function.php'; ?>
-    <link rel="stylesheet" href="../Style.css">
+    <?php include './function/function.php'; ?>
+    <link rel="stylesheet" href="./Style.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
             $id_archive = $_GET['id'];
 
             // Retrieve and display the record with the specified ID
-            $stmt = $pdo->prepare("SELECT * FROM devicestable WHERE id = :id");
+            $stmt = $pdo->prepare("SELECT * FROM cabinet_devices WHERE id = :id");
             $stmt->bindParam(':id', $id_archive, PDO::PARAM_INT);
             $stmt->execute();
             $record = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -150,35 +150,33 @@
                     </tr>
                 </table>
                 </form>
-                <a id="updated" href='edit.php?id=<?= $id_archive ?>&archive=true'>Archive</a>
+                <button onclick="archiveRecord(<?= $id_archive ?>)">Archive</button>
                 <?php
-                
-
                 if (isset($_GET['archive']) && isset($_GET['id'])) {
                     $archive = $_GET['archive'] === 'true' ? true : false;
                     $id = $_GET['id'];
 
-                    $sql = "UPDATE devicestable SET IsArchived = :archive WHERE id = :id";
+                    $sql = "UPDATE cabinet_devices SET IsArchived = :archive WHERE id = :id";
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindParam(':archive', $archive, PDO::PARAM_BOOL);
                     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                     
                     if ($stmt->execute()) {
                         echo '<script>
-                            alert("Record with ID ' . $id_archive . ' deleted successfully.");
+                            alert("Record with ID ' . $id_archive . ' archived successfully.");
                             window.location.href = "edit.php"; 
-                            
                         </script>';
                     } else {
-                        echo '<script>alert("Error deleting record with ID ' . $id_archive . '.");</script>';
+                        echo '<script>alert("Error archiving record with ID ' . $id_archive . '.");</script>';
                     }
                 }
             } else {
                 echo "Record with ID $id_archive not found.";
             }
         } else {
-            echo "No ID specified for deletion.";
-        }
+            header("Location: edit.php");
+            exit();
+        }        
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     } finally {
@@ -189,6 +187,15 @@
     }
     ?>
     <?php Footer() ?>
+    <script>
+    function archiveRecord(id) {
+        var confirmation = confirm("Are you sure you want to archive this record?");
+        if (confirmation) {
+            window.location.href = 'archive_single_cabinet.php?id=' + id + '&archive=true';
+        }
+    }
+</script>
+
 </body>
 
 </html>

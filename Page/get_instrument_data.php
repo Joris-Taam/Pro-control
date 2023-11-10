@@ -1,5 +1,5 @@
 <?php
-include '../function/function.php';
+include './function/function.php';
 
 if (isset($_GET['Instruments'])) {
     $selectedInstruments = $_GET['Instruments'];

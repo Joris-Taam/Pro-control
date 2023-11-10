@@ -1,0 +1,138 @@
+<?php
+// function for the Navbar
+function Navbar()
+{
+    echo '<div class="navbar">';
+    echo '<ul>';
+    echo '<li class="navbar-logo"><a href="index.php"><img src="../Images/logo.png" alt="Logo"></a></li>';
+    echo '<li><a href="index.php">Home</a></li>';
+    echo '<li><a href="add.php">Add</a></li>';
+    echo '<li><a href="Edit.php">Edit</a></li>';
+
+    echo '<li><a href="archive.php">Archive</a></li>';
+    echo '</ul>';
+    echo '</div>';
+}
+?>
+<?php
+// function for the footer
+function Footer()
+{
+    echo '<footer>';
+    echo '<div>';
+    echo '<a id="footer-copyright" href="index.php">Copyright &copy;2023 - 2024 All rights reserved | Pro-control</a>';
+    echo '</div>';
+    echo '</footer>';
+}
+// function for the Database connetion
+function DBconnect()
+{
+    $localhost = 'localhost';
+    $db = 'Devices';
+    $user = 'root';
+    $pass = '';
+    $charset = 'utf8mb4';
+    $dsn = "mysql:host=$localhost;dbname=$db;charset=$charset";
+    try {
+        $pdo = new PDO($dsn, $user, $pass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo; // Return the PDO object for database operations
+    } catch (\PDOException $e) {
+        echo 'error connecting to database: ' . $e->getMessage();
+        return null; // Return null to indicate a failed connection
+    }
+}
+
+// get from devicestable Category
+function GetCabinetCategoryData()
+{
+    $pdo = DBconnect();
+    $sql = "SELECT Category FROM `Cabinet_devices` GROUP BY Category";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);;
+}
+// get from devicestable instruments
+function GetInstrumentData()
+{
+    $pdo = DBconnect();
+    $sql = "SELECT Instruments FROM `Cabinet_devices` GROUP BY Instruments";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+// get from devicestable Price
+function GetPriceData()
+{
+    $pdo = DBconnect();
+    $sql = "SELECT Price FROM `Cabinet_devices` GROUP BY Price";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function InsertData()
+{
+    try {
+        // Establish a database connection
+        $pdo = DBconnect();
+
+        // Handle form submission
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Get data from the form
+            $Category = $_POST['category_name'];
+            $Instruments = $_POST['category_data'];
+            $Price = $_POST['category_Price'];
+            $Description = $_POST['Description'];
+
+            // Get the selected table
+            $selectedTable = $_POST['table_name'];
+
+            // Construct the SQL query with the selected table
+            $sql = "INSERT INTO $selectedTable (Category, Instruments, Price, Description, DI, DO, AI, AO, TC, PT100, TSA, FI, RSxxx, TCP, Pre_Eng, Paneel_Uren, Software_PLC, Software_HMI, Test_internal, mm_Din, Cable_signal, Connector_Signal, Cable_simple, Connector_Simple)
+            VALUES (:Category, :Instruments, :Price, :Description, :DI, :DO, :AI, :AO, :TC, :PT100, :TSA, :FI, :RSxxx, :TCP, :Pre_Eng, :Paneel_Uren, :Software_PLC, :Software_HMI, :Test_internal, :mm_Din, :Cable_signal, :Connector_Signal, :Cable_simple, :Connector_Simple)";
+
+            // Prepare the SQL statement
+            $stmt = $pdo->prepare($sql);
+
+            // Bind parameters
+            $stmt->bindParam(':Category', $Category);
+            $stmt->bindParam(':Instruments', $Instruments);
+            $stmt->bindParam(':Price', $Price);
+            $stmt->bindParam(':Description', $Description);
+            $stmt->bindParam(':DI', $DI);
+            $stmt->bindParam(':DO', $DO);
+            $stmt->bindParam(':AI', $AI);
+            $stmt->bindParam(':AO', $AO);
+            $stmt->bindParam(':TC', $TC);
+            $stmt->bindParam(':PT100', $PT100);
+            $stmt->bindParam(':TSA', $TSA);
+            $stmt->bindParam(':FI', $FI);
+            $stmt->bindParam(':RSxxx', $RSxxx);
+            $stmt->bindParam(':TCP', $TCP);
+            $stmt->bindParam(':Pre_Eng', $Pre_Eng);
+            $stmt->bindParam(':Paneel_Uren', $Paneel_Uren);
+            $stmt->bindParam(':Software_PLC', $Software_PLC);
+            $stmt->bindParam(':Software_HMI', $Software_HMI);
+            $stmt->bindParam(':Test_internal', $Test_internal);
+            $stmt->bindParam(':mm_Din', $mm_Din);
+            $stmt->bindParam(':Cable_signal', $Cable_signal);
+            $stmt->bindParam(':Connector_Signal', $Connector_Signal);
+            $stmt->bindParam(':Cable_simple', $Cable_simple);
+            $stmt->bindParam(':Connector_Simple', $Connector_Simple);
+
+            // Execute the statement
+            $stmt->execute();
+
+
+            echo "Record inserted successfully.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    } finally {
+        // Close the database connection
+        if ($pdo !== null) {
+            $pdo = null;
+        }
+    }
+}

@@ -3,8 +3,8 @@
 
 <head>
     <title>Pro-Control</title>
-    <?php include '../function/function.php'; ?>
-    <link rel="stylesheet" href="../Style.css">
+    <?php include './function/function.php'; ?>
+    <link rel="stylesheet" href="./Style.css">
 </head>
 
 <body>
@@ -22,62 +22,65 @@
                 $orderBy = in_array($orderBy, ['Category', 'Instruments', 'Price']) ? $orderBy : 'Category';
                 $orderDirection = in_array($orderDirection, ['ASC', 'DESC']) ? $orderDirection : 'ASC';
 
-                // Check if the request is for archiving or restoring a record
-                if (isset($_GET['archive']) && isset($_GET['id'])) {
-                    $archive = $_GET['archive'] === 'true' ? true : false;
-                    $id = $_GET['id'];
-
-                    $sql = "UPDATE devicestable SET IsArchived = :archive WHERE id = :id";
+                // Function to fetch data from the database and display the table
+                function displayTable($pdo, $tableName, $orderBy, $orderDirection)
+                {
+                    $sql = "SELECT * FROM $tableName WHERE IsArchived = false ORDER BY $orderBy $orderDirection";
                     $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':archive', $archive, PDO::PARAM_BOOL);
-                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    $stmt->execute();
 
-                    if ($stmt->execute()) {
-                        echo "Record " . ($archive ? "archived" : "restored") . " successfully.";
-                    } else {
-                        echo "Error updating record.";
-                    }
-                }
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                $sql = "SELECT * FROM devicestable WHERE IsArchived = false ORDER BY $orderBy $orderDirection";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute();
+                    if (count($result) > 0) {
+                        echo "<table class='border' id='edit_table'>";
+                        echo "<tr>
+                             <th><a href='?orderby=Category&orderdir=" . ($orderBy === 'Category' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Category</a></th>
+                             <th><a href='?orderby=Instruments&orderdir=" . ($orderBy === 'Instruments' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Instruments</a></th>
+                             <th><a href='?orderby=Price&orderdir=" . ($orderBy === 'Price' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Price</a></th>
+                             <th><a href='?orderby=AddedTime&orderdir=" . ($orderBy === 'Added_Time' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Added Time</a></th>
+                             <th>Edit</th>
+                             <th>Archive</th>
+                         </tr>";
 
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as $row) {
+                            echo "<tr>";
+                            echo "<td>" . $row["Category"] . "</td>";
+                            echo "<td>" . $row["Instruments"] . "</td>";
+                            echo "<td>€" . $row["Price"] . "</td>";
+                            echo "<td>" . $row["Added_Time"] . "</td>";
 
-                if (count($result) > 0) {
-                    echo "<table class='border' id='edit_table'>";
-                    echo "<tr>
-                         <th><a href='?orderby=Category&orderdir=" . ($orderBy === 'Category' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Category</a></th>
-                         <th><a href='?orderby=Instruments&orderdir=" . ($orderBy === 'Instruments' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Instruments</a></th>
-                         <th><a href='?orderby=Price&orderdir=" . ($orderBy === 'Price' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Price</a></th>
-                         <th><a href='?orderby=AddedTime&orderdir=" . ($orderBy === 'Added_Time' && $orderDirection === 'ASC' ? 'DESC' : 'ASC') . "'>Added Time</a></th>
-                         <th>Edit</th>
-                         <th>Archive</th>
-                     </tr>";
+                            // Edit link based on device type
+                            $editLink = $tableName === 'cabinet_devices' ? 'edit_single_cabinet.php' : 'edit_single_field.php';
 
-                    foreach ($result as $row) {
-                        echo "<tr>";
-                        echo "<td>" . $row["Category"] . "</td>";
-                        echo "<td>" . $row["Instruments"] . "</td>";
-                        echo "<td>€" . $row["Price"] . "</td>";
-                        echo "<td>" . $row["Added_Time"] . "</td>";
-                        echo "<td><a href='edit_single.php?id=" . $row["id"] . "'>Edit</a></td>";
+                            echo "<td><a href='$editLink?id=" . $row["id"] . "'>Edit</a></td>";
 
-                        // Check if the record is archived, and provide the appropriate link
-                        if ($row['IsArchived']) {
-                            echo "<td><a href='edit.php?id=" . $row["id"] . "&archive=false'>Restore</a></td>";
-                        } else {
-                            echo "<td><a  href='archive_single.php?id=" . $row["id"] . "'>Archive</a></td>";
+                            // Check if the record is archived, and provide the appropriate link
+                            if ($row['IsArchived']) {
+                                echo "<td><a href='edit.php?id=" . $row["id"] . "&archive=false'>Restore</a></td>";
+                            } else {
+                                // Change the link for field devices to point to archive_single_field.php
+                                $archiveLink = $tableName === 'cabinet_devices' ? 'archive_single_cabinet.php' : 'archive_single_field.php';
+                                echo "<td><a href='$archiveLink?id=" . $row["id"] . "'>Archive</a></td>";
+                            }
+
+
+
+                            echo "</tr>";
                         }
 
-                        echo "</tr>";
+                        echo "</table>";
+                    } else {
+                        echo "No active records found for $tableName.";
                     }
-
-                    echo "</table>";
-                } else {
-                    echo "No active records found.";
                 }
+
+                // Display Cabinet Devices table
+                echo "<h2>Cabinet Devices</h2>";
+                displayTable($pdo, 'cabinet_devices', $orderBy, $orderDirection);
+
+                // Display Field Devices table
+                echo "<h2>Field Devices</h2>";
+                displayTable($pdo, 'field_devices', $orderBy, $orderDirection);
             } else {
                 echo "Database connection failed.";
             }

@@ -3,8 +3,8 @@
 
 <head>
     <title>Edit Record</title>
-    <?php include '../function/function.php'; ?>
-    <link rel="stylesheet" href="../Style.css">
+    <?php include './function/function.php'; ?>
+    <link rel="stylesheet" href="./Style.css">
 </head>
 
 <body>
@@ -19,7 +19,7 @@
             $pdo = DBconnect();
 
             if ($pdo) {
-                $sql = "UPDATE devicestable SET 
+                $sql = "UPDATE cabinet_devices SET 
     Category = :category,
     Instruments = :instruments,
     Price = :price,
@@ -89,7 +89,7 @@
             $pdo = DBconnect();
 
             if ($pdo) {
-                $sql = "SELECT * FROM devicestable WHERE id = :id";
+                $sql = "SELECT * FROM cabinet_devices WHERE id = :id";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmt->execute();
