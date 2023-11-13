@@ -84,14 +84,33 @@ function InsertData()
             $Instruments = $_POST['category_data'];
             $Price = $_POST['category_Price'];
             $Description = $_POST['Description'];
-
+            $DI = $_POST["quantity-DI"];
+            $DO = $_POST["quantity-DO"];
+            $AI = $_POST["quantity-AI"];
+            $AO = $_POST["quantity-AO"];
+            $TC = $_POST["quantity-TC"];
+            $PT100 = $_POST["quantity-PT100"];
+            $TSA = $_POST["quantity-TSA"];
+            $FI = $_POST["quantity-FI"];
+            $RSxxx = $_POST["quantity-RSxxx"];
+            $TCP = $_POST["quantity-TCP"];
+            $Pre_Eng = $_POST['pre-eng'];
+            $Paneel_Uren = $_POST['paneel-uren'];
+            $Software_PLC = $_POST['software-plc'];
+            $Software_HMI = $_POST['software-hmi'];
+            $Test_internal = $_POST['test-internal'];
+            $mm_Din = $_POST['mm_Din'];
+            $Cable_signal = $_POST['cable-signal'];
+            $Connector_Signal = $_POST['connector-signal'];
+            $Cable_simple = $_POST['cable-simple'];
+            $Connector_Simple = $_POST['connector-simple'];
             // Get the selected table
             $selectedTable = $_POST['table_name'];
 
             // Construct the SQL query with the selected table
-            $sql = "INSERT INTO $selectedTable (Category, Instruments, Price, Description, DI, DO, AI, AO, TC, PT100, TSA, FI, RSxxx, TCP, Pre_Eng, Paneel_Uren, Software_PLC, Software_HMI, Test_internal, mm_Din, Cable_signal, Connector_Signal, Cable_simple, Connector_Simple)
-            VALUES (:Category, :Instruments, :Price, :Description, :DI, :DO, :AI, :AO, :TC, :PT100, :TSA, :FI, :RSxxx, :TCP, :Pre_Eng, :Paneel_Uren, :Software_PLC, :Software_HMI, :Test_internal, :mm_Din, :Cable_signal, :Connector_Signal, :Cable_simple, :Connector_Simple)";
-
+            $sql = "INSERT INTO $selectedTable (id, Category, Instruments, Price, Description, DI, DO, AI, AO, TC, PT100, TSA, FI, RSxxx, TCP, Pre_Eng, Paneel_Uren, Software_PLC, Software_HMI, Test_internal, mm_Din, Cable_signal, Connector_Signal, Cable_simple, Connector_Simple)
+            VALUES (NULL, :Category, :Instruments, :Price, :Description, :DI, :DO, :AI, :AO, :TC, :PT100, :TSA, :FI, :RSxxx, :TCP, :Pre_Eng, :Paneel_Uren, :Software_PLC, :Software_HMI, :Test_internal, :mm_Din, :Cable_signal, :Connector_Signal, :Cable_simple, :Connector_Simple)";
+            
             // Prepare the SQL statement
             $stmt = $pdo->prepare($sql);
 

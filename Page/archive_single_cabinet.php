@@ -4,7 +4,7 @@
 <head>
     <title>Delete Record</title>
     <?php include './function/function.php'; ?>
-    <link rel="stylesheet" href="./Style.css">
+    <link rel="stylesheet" href="../Page/Style.css">
 </head>
 
 <body>
@@ -150,7 +150,7 @@
                     </tr>
                 </table>
                 </form>
-                <button onclick="archiveRecord(<?= $id_archive ?>)">Archive</button>
+                <button id="#delete" onclick="archiveRecord(<?= $id_archive ?>)">Archive</button>
                 <?php
                 if (isset($_GET['archive']) && isset($_GET['id'])) {
                     $archive = $_GET['archive'] === 'true' ? true : false;

@@ -25,7 +25,7 @@
     Price = :price,
     Description = :Description,
     DI = :di,
-    DO = :do_val, 
+    DO = :do, 
     AI = :ai,
     AO = :ao,
     TC = :tc,
@@ -52,7 +52,7 @@
                 $stmt->bindParam(':Description', $_POST['newDescription'], PDO::PARAM_STR);
                 $stmt->bindParam(':price', $_POST['newPrice'], PDO::PARAM_STR);
                 $stmt->bindParam(':di', $_POST['newDI'], PDO::PARAM_STR);
-                $stmt->bindParam(':do_val', $_POST['nowDO'], PDO::PARAM_STR);
+                $stmt->bindParam(':do', $_POST['nowDO'], PDO::PARAM_STR);
                 $stmt->bindParam(':ai', $_POST['newAI'], PDO::PARAM_STR);
                 $stmt->bindParam(':ao', $_POST['newAO'], PDO::PARAM_STR);
                 $stmt->bindParam(':tc', $_POST['newTC'], PDO::PARAM_STR);

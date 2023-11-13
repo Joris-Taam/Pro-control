@@ -9,7 +9,7 @@
 <?php Navbar(); ?>
 
 <body>
-
+<?php InsertData();?>
     <!-- from for the categories -->
     <form method="POST" action="insert_data.php">
         <table>
@@ -46,7 +46,7 @@
 </td>
 <td>
     <label for="category_Price">Price</label><br>
-    <input type="text" name="category_Price" id="category_Price" placeholder="De price of the instrument" required>
+    <input type="text" name="category_Price" id="category_Price" placeholder="The price of the instrument" value="€" required>
 </td>
 <td>
     <label for="Description">Description</label><br>
