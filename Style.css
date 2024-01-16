@@ -38,12 +38,10 @@
 }
 
 /* Index.php */
-
-/* button container */
-.button-container {
+.container { 
   display: flex;
+  align-items: center;
   flex-direction: column;
-  max-width: 80%;
 }
 
 .index-button {
@@ -53,11 +51,13 @@
   color: #f29000;
   align-items: center;
   height: 50px;
-  margin-bottom:x 20px;
+  margin-bottom: 20px;
   margin-top: 20px;
-  width: 1000px;
+  width: 50%; 
   text-decoration: none;
+  
 }
+
 
 /* add.php */
 
@@ -88,7 +88,6 @@ form {
   display: flex;
   flex-direction: row;
 }
-
 
 .cablecontainer {
   margin-top: 50px;
@@ -149,7 +148,7 @@ select {
   text-decoration: none;
   color: #1d0b38;
 }
-#edit_table, a {
+#edit_table, #edit_table a {
   text-decoration: none;
   color: #f29000;
 }
@@ -165,6 +164,7 @@ select {
 .margin { 
   margin-bottom: 50px;
 }
+
 /* edit single */
 
 #edit_single_table 
@@ -183,6 +183,14 @@ input[type="text"],
   color: #f29000;
   background-color: #1d0b38;
   font-weight:bold;
+}
+#updated { 
+  margin-top:5px;
+  padding: 4px;
+  background-color: #1d0b38;
+  color: #f29000;
+  text-decoration: none;
+
 }
 #delete:hover { 
   color: yellow;
