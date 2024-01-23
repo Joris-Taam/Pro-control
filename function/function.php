@@ -76,11 +76,7 @@ function InsertData()
         $pdo = DBconnect();
 
         // Handle form submission
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            // // Get the Windows username
-            // $windowsUsername = $_SERVER['REMOTE_USER'] ?? 'Unknown';
-            
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {      
 
             // Get data from the form
             $Category = $_POST['category_name'];
@@ -143,7 +139,6 @@ function InsertData()
             $stmt->bindParam(':Connector_Signal', $Connector_Signal);
             $stmt->bindParam(':Cable_simple', $Cable_simple);
             $stmt->bindParam(':Connector_Simple', $Connector_Simple);
-            // $stmt->bindParam(':Windows_Username', $windowsUsername);
             $stmt->bindParam(':Added_time', $addedTime);
             
 

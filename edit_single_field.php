@@ -19,32 +19,33 @@
             $pdo = DBconnect();
 
             if ($pdo) {
-                $sql = "UPDATE Field_devices SET 
-    Category = :category,
-    Instruments = :instruments,
-    Price = :price,
-    Description = :Description,
-    DI = :di,
-    DO = :do, 
-    AI = :ai,
-    AO = :ao,
-    TC = :tc,
-    PT100 = :pt100,     
-    TSA = :tsa,
-    FI = :fi,
-    RSxxx = :rsxxx,
-    TCP = :tcp,
-    pre_eng = :pre_eng,
-    paneel_uren = :paneel_uren,
-    software_PLC = :software_PLC,
-    software_HMI = :software_HMI,
-    test_internal = :test_internal,
-    mm_Din = :mm_Din,
-    cable_signal = :cable_signal,
-    connector_signal = :connector_signal,
-    Cable_Simple = :cable_simple,
-    Added_Time = :Added_Time
-    WHERE id = :id";
+                $sql = "UPDATE field_devices SET 
+                Category = :category,
+                Instruments = :instruments,
+                Price = :price,
+                Description = :Description,
+                DI = :di,
+                DO = :do, 
+                AI = :ai,
+                AO = :ao,
+                TC = :tc,
+                PT100 = :pt100,     
+                TSA = :tsa,
+                FI = :fi,
+                RSxxx = :rsxxx,
+                TCP = :tcp,
+                pre_eng = :pre_eng,
+                paneel_uren = :paneel_uren,
+                software_PLC = :software_PLC,
+                software_HMI = :software_HMI,
+                test_internal = :test_internal,
+                mm_Din = :mm_Din,
+                cable_signal = :cable_signal,
+                Connector_Signal = :connector_signal,
+                Cable_Simple = :cable_simple,
+                Connector_Simple = :connector_simple,
+                Added_Time = :Added_Time
+                WHERE id = :id";
 
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':category', $_POST['newCategory'], PDO::PARAM_STR);
@@ -68,22 +69,23 @@
                 $stmt->bindParam(':test_internal', $_POST['newtest_internal'], PDO::PARAM_STR);
                 $stmt->bindParam(':mm_Din', $_POST['newmm_Din'], PDO::PARAM_STR);
                 $stmt->bindParam(':cable_signal', $_POST['newcable_signal'], PDO::PARAM_STR);
-                $stmt->bindParam(':connector_signal', $_POST['newconnector_signal'], PDO::PARAM_STR);
+                $stmt->bindParam(':connector_signal', $_POST['newConnector_Signal'], PDO::PARAM_INT);
                 $stmt->bindParam(':cable_simple', $_POST['newCable_Simple'], PDO::PARAM_STR);
+                $stmt->bindParam(':connector_simple', $_POST['newConnector_Simple'], PDO::PARAM_STR);
                 $stmt->bindParam(':Added_Time', $_POST['newAdded_Time'], PDO::PARAM_STR);
                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-                    if ($stmt->execute()) {
-                        echo '<script>
+                if ($stmt->execute()) {
+                    echo '<script>
                             alert("Record edited successfully.");
                             window.location.href = "edit.php"; 
                         </script>';
-                    } else {
-                        echo "Error updating record: " . $stmt->errorInfo()[2];
-                    }
                 } else {
-                    echo "Database connection failed.";
+                    echo "Error updating record: " . $stmt->errorInfo()[2];
                 }
+            } else {
+                echo "Database connection failed.";
+            }
         } else {
             // Fetch the existing data for the specified ID
             $pdo = DBconnect();
@@ -111,18 +113,18 @@
                                 </td>
                                 <td>
                                     <label for="newPrice">Price:</label>
-                                    <input type="text" id="newPrice" name="newPrice" value="<?= $row['Price'] ?>" placeholder="Change the price"><br>
+                                    <input type="text" id="newPrice" name="newPrice" value="<?= number_format($row["Price"], 2) ?>" placeholder="Change the price"><br>
                                 </td>
                                 <td>
                                     <label for="newDescription">Description:</label>
                                     <input type="text" id="newDescription" name="newDescription" value="<?= $row['Description'] ?>" placeholder="Change the description"><br>
                                 </td>
-                            
+
                                 <td>
                                     <label for="Added_Time">Added time:</label>
                                     <input type="text" id="newAdded_Time" name="newAdded_Time" value="<?= $row['Added_Time'] ?>" placeholder=" Change the date">
                                 </td>
-                          
+
                             </tr>
                         </table>
                         <div class="flexcontainer">
@@ -185,23 +187,23 @@
                                 <table id="edit_single_table">
                                     <tr>
                                         <td><label for="newpre_eng">pre_eng:</label></td>
-                                        <td><input type="text" id="newpre_eng" name="newpre_eng" value="<?= $row['Pre_Eng'] ?>"></td>
+                                        <td><input type="text" id="newpre_eng" name="newpre_eng" value="<?= number_format($row['Pre_Eng'], 2) ?>"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="newpaneel_uren">paneel_uren:</label></td>
-                                        <td><input type="text" id="newpaneel_uren" name="newpaneel_uren" value="<?= $row['Paneel_Uren'] ?>"></td>
+                                        <td><input type="text" id="newpaneel_uren" name="newpaneel_uren" value="<?= number_format($row['Paneel_Uren'],2)?>"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="newsoftware_PLC">software_PLC:</label></td>
-                                        <td><input type="text" id="newsoftware_PLC" name="newsoftware_PLC" value="<?= $row['Software_PLC'] ?>"></td>
+                                        <td><input type="text" id="newsoftware_PLC" name="newsoftware_PLC" value="<?= number_format($row['Software_PLC'], 2) ?>"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="newsoftware_HMI">software_HMI:</label></td>
-                                        <td><input type="text" id="newsoftware_HMI" name="newsoftware_HMI" value="<?= $row['Software_HMI'] ?>"></td>
+                                        <td><input type="text" id="newsoftware_HMI" name="newsoftware_HMI" value="<?= number_format($row['Software_HMI'], 2) ?>"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="test_internal">test_internal:</label></td>
-                                        <td><input type="text" id="test_internal" name="newtest_internal" value="<?= $row['Test_internal'] ?>"></td>
+                                        <td><input type="text" id="test_internal" name="newtest_internal" value="<?= number_format($row['Test_internal'], 2) ?>"></td>
                                     </tr>
                                 </table>
                                 <div class="cablecontainer">
@@ -210,17 +212,18 @@
                                         <tr>
                                             <td> <label for="newmm_Din">mm_Din:</label>
                                             <td> <input type="text" id="newmm_Din" name="newmm_Din" value="<?= $row['mm_Din'] ?>">
-                                        <tr>
-                                            <td> <label for="newconnector_signal">connector_signal:</label>
-                                            <td> <input type="text" id="newconnector_signal" name="newconnector_signal" value="<?= $row['Connector_Signal'] ?>">
                                         </tr>
                                         <tr>
                                             <td> <label for="newcable_signal">cable_signal:</label>
                                             <td> <input type="text" id="newcable_signal" name="newcable_signal" value="<?= $row['Cable_signal'] ?>">
                                         </tr>
                                         <tr>
+                                            <td> <label for="newConnector_Signal">connector_signal:</label>
+                                            <td> <input type="text" id="newConnector_Signal" name="newConnector_Signal" value="<?= $row['Connector_Signal'] ?>">
+                                        </tr>
+                                        <tr>
                                             <td> <label for="newCable_Simple">Cable_Simple:</label>
-                                            <td> <input type="text" id="newCable_Simple" name="newCable_Simple" value="<?= $row['Cable_simple'] ?>">
+                                            <td> <input type="text" id="newCable_Simple" name="newCable_Simple" value="<?= $row['Cable_Simple'] ?>">
                                         </tr>
                                         <tr>
                                             <td> <label for="newConnector_Simple">Connector_Simple:</label>
@@ -235,16 +238,16 @@
                     </div>
     <?php
 
+                } else {
+                    echo "Record not found.";
+                }
             } else {
-                echo "Record not found.";
+                echo "Database connection failed.";
             }
-        } else {
-            echo "Database connection failed.";
         }
+    } else {
+        echo "Invalid or missing ID parameter.";
     }
-} else {
-    echo "Invalid or missing ID parameter.";
-}
     ?>
     <?php Footer() ?>
 </body>

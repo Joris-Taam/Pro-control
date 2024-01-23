@@ -13,13 +13,6 @@
     <!-- from for the categories -->
     <form method="POST" action="insert_data.php">
         <table>
-        <?php
-        // Get the current user (Windows username)
-        $user = $_SERVER['AUTH_USER'];
-
-        // Echo the current user
-        echo "Current User: $user";
-        ?>
 
             <!-- Category 1 -->
             <tr>
