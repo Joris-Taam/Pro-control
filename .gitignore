@@ -1,0 +1,6 @@
+node_modules/
+.env
+/devices.sql
+/instrument.csv
+/instrument1.csv
+/database/sqlserver-devices.sql

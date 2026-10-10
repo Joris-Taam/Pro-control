@@ -3,12 +3,11 @@
 
 <head>
     <title>Edit Record</title>
-    <?php include './function/function.php'; ?>
-    <link rel="stylesheet" href="./Style.css">
+    <link rel="stylesheet" href="./assets/css/global.css">
 </head>
 
 <body>
-    <?php Navbar(); ?>
+    <?php renderNavigation(); ?>
     <?php
 
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -16,89 +15,15 @@
 
         // Check if the form was submitted for updating the record
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $pdo = DBconnect();
-
-            if ($pdo) {
-                $sql = "UPDATE field_devices SET 
-                Category = :category,
-                Instruments = :instruments,
-                Price = :price,
-                Description = :Description,
-                DI = :di,
-                DO = :do, 
-                AI = :ai,
-                AO = :ao,
-                TC = :tc,
-                PT100 = :pt100,     
-                TSA = :tsa,
-                FI = :fi,
-                RSxxx = :rsxxx,
-                TCP = :tcp,
-                pre_eng = :pre_eng,
-                paneel_uren = :paneel_uren,
-                software_PLC = :software_PLC,
-                software_HMI = :software_HMI,
-                test_internal = :test_internal,
-                mm_Din = :mm_Din,
-                cable_signal = :cable_signal,
-                Connector_Signal = :connector_signal,
-                Cable_Simple = :cable_simple,
-                Connector_Simple = :connector_simple,
-                Added_Time = :Added_Time
-                WHERE id = :id";
-
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':category', $_POST['newCategory'], PDO::PARAM_STR);
-                $stmt->bindParam(':instruments', $_POST['newInstruments'], PDO::PARAM_STR);
-                $stmt->bindParam(':Description', $_POST['newDescription'], PDO::PARAM_STR);
-                $stmt->bindParam(':price', $_POST['newPrice'], PDO::PARAM_STR);
-                $stmt->bindParam(':di', $_POST['newDI'], PDO::PARAM_STR);
-                $stmt->bindParam(':do', $_POST['newDO'], PDO::PARAM_STR);
-                $stmt->bindParam(':ai', $_POST['newAI'], PDO::PARAM_STR);
-                $stmt->bindParam(':ao', $_POST['newAO'], PDO::PARAM_STR);
-                $stmt->bindParam(':tc', $_POST['newTC'], PDO::PARAM_STR);
-                $stmt->bindParam(':pt100', $_POST['newPT100'], PDO::PARAM_STR);
-                $stmt->bindParam(':tsa', $_POST['newTSA'], PDO::PARAM_STR);
-                $stmt->bindParam(':fi', $_POST['newFI'], PDO::PARAM_STR);
-                $stmt->bindParam(':rsxxx', $_POST['newRSxxx'], PDO::PARAM_STR);
-                $stmt->bindParam(':tcp', $_POST['newTCP'], PDO::PARAM_STR);
-                $stmt->bindParam(':pre_eng', $_POST['newpre_eng'], PDO::PARAM_STR);
-                $stmt->bindParam(':paneel_uren', $_POST['newpaneel_uren'], PDO::PARAM_STR);
-                $stmt->bindParam(':software_PLC', $_POST['newsoftware_PLC'], PDO::PARAM_STR);
-                $stmt->bindParam(':software_HMI', $_POST['newsoftware_HMI'], PDO::PARAM_STR);
-                $stmt->bindParam(':test_internal', $_POST['newtest_internal'], PDO::PARAM_STR);
-                $stmt->bindParam(':mm_Din', $_POST['newmm_Din'], PDO::PARAM_STR);
-                $stmt->bindParam(':cable_signal', $_POST['newcable_signal'], PDO::PARAM_STR);
-                $stmt->bindParam(':connector_signal', $_POST['newConnector_Signal'], PDO::PARAM_INT);
-                $stmt->bindParam(':cable_simple', $_POST['newCable_Simple'], PDO::PARAM_STR);
-                $stmt->bindParam(':connector_simple', $_POST['newConnector_Simple'], PDO::PARAM_STR);
-                $stmt->bindParam(':Added_Time', $_POST['newAdded_Time'], PDO::PARAM_STR);
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-                if ($stmt->execute()) {
-                    echo '<script>
+            PageController::updateDevice($deviceTable, (int) $id, $_POST);
+            echo '<script>
                             alert("Record edited successfully.");
-                            window.location.href = "edit.php"; 
+                            window.location.href = "Edit.php"; 
                         </script>';
-                } else {
-                    echo "Error updating record: " . $stmt->errorInfo()[2];
-                }
-            } else {
-                echo "Database connection failed.";
-            }
         } else {
             // Fetch the existing data for the specified ID
-            $pdo = DBconnect();
-
-            if ($pdo) {
-                $sql = "SELECT * FROM field_devices WHERE id = :id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                $stmt->execute();
-
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($row) {
+            $row = PageController::findDevice($deviceTable, (int) $id);
+            if ($row) {
     ?>
                     <form class="margin" method="POST" action="">
                         <table>
@@ -191,7 +116,8 @@
                                     </tr>
                                     <tr>
                                         <td><label for="newpaneel_uren">paneel_uren:</label></td>
-                                        <td><input type="text" id="newpaneel_uren" name="newpaneel_uren" value="<?= number_format($row['Paneel_Uren'],2)?>"></td>
+                                        <td><input type="text" id="newpaneel_uren" name="newpaneel_uren" value="<?= number_format($row['Paneel_Uren'], 2) ?>"></td>
+
                                     </tr>
                                     <tr>
                                         <td><label for="newsoftware_PLC">software_PLC:</label></td>
@@ -223,7 +149,7 @@
                                         </tr>
                                         <tr>
                                             <td> <label for="newCable_Simple">Cable_Simple:</label>
-                                            <td> <input type="text" id="newCable_Simple" name="newCable_Simple" value="<?= $row['Cable_Simple'] ?>">
+                                            <td> <input type="text" id="newCable_Simple" name="newCable_Simple" value="<?= $row['Cable_simple'] ?>">
                                         </tr>
                                         <tr>
                                             <td> <label for="newConnector_Simple">Connector_Simple:</label>
@@ -238,18 +164,14 @@
                     </div>
     <?php
 
-                } else {
-                    echo "Record not found.";
-                }
-            } else {
-                echo "Database connection failed.";
             }
         }
     } else {
         echo "Invalid or missing ID parameter.";
     }
+
     ?>
-    <?php Footer() ?>
+    <?php renderFooter(); ?>
 </body>
 
 </html>

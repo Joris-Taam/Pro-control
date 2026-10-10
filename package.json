@@ -1,0 +1,11 @@
+{
+  "name": "pro-control",
+  "private": true,
+  "scripts": {
+    "build:typescript": "tsc --project tsconfig.json",
+    "check:typescript": "tsc --project tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,66 +1,73 @@
-# Quote's Website Guide
+# Pro-control
 
-## Introduction
+Pro-control is a small PHP application for adding, editing, and archiving cabinet and field-device records. It uses PDO to connect to Microsoft SQL Server.
 
-Welcome to the Quote's website guide! This guide provides comprehensive information about the Quote's website, a PHP, HTML, and JS webpage designed for adding cabinets and field devices to Excel quotes. The added devices are sent to the Microsoft SQL server, which is then connected to the Excel file. You can refresh the imported datasheet within the Excel file to ensure it reflects the latest updates.
+## Project structure
 
-## Website Structure
+```text
+backend/
+  Controller/       HTTP actions for device-related requests
+  Entity/           Device data model and form mapping
+  Service/          Database-backed device operations
+  Util/             Database connection and table-name validation
+  bootstrap.php     Loads the backend classes
+frontend/
+  Controller/       Page routing and view rendering
+  Components/       Shared navigation and footer
+  views/            Shared page templates
+public/
+  *.php             Public routes and request entrypoints
+  assets/
+    css/global.css  Shared styles and CSS custom properties
+    js/             Compiled browser modules (generated from TypeScript)
+    images/         Public images
+package.json        TypeScript build scripts and compiler dependency
+tsconfig.json       TypeScript compiler configuration
+```
 
-The website is structured with the following main pages:
+Configure the web server's document root to `public/`. Only this folder should be publicly served. Page templates and backend source remain outside the document root.
 
-1. **index.php**: Options to 'Add new record' and 'Edit existing record'. Use 'Add new record' for adding a non-existing Cabinet/Instrument and 'Edit existing record' for modifying an existing record.
+Cabinet and field edit pages share `frontend/views/edit-device.php`; cabinet and field archive-detail pages share `frontend/views/archive-device.php`. The table name is selected by the page controller, so their presentation and request handling are maintained once.
 
-2. **add.php**: Fields for adding new records, including:
-   - Selected Table
-   - Categories
-   - Instruments
-   - Price
-   - Description
-   - Digital Inputs/Outputs
-   - Hours Work Time
-   - Cable Amount
+## Backend request flow
 
+1. A route in `public/` forwards the request to `backend/Controller/DeviceController.php`.
+2. The controller validates the request and delegates database work to `backend/Service/DeviceService.php`.
+3. The service uses `backend/Util/Database.php` for its PDO connection and `backend/Util/DeviceTable.php` to allow only the two device tables.
+4. `backend/Entity/Device.php` maps submitted form fields to database columns.
 
-3. **edit.php**: Displays tables for Cabinet/Field devices with separate boxes for Categories, Instruments, Price, and added time. Options to Edit or Archive rows.
+## Frontend request flow
 
+Page entrypoints in `public/` call `frontend/Controller/PageController.php`, which selects a template from `frontend/views`. Shared navigation and footer markup live in `frontend/Components`. Browser code is written in TypeScript in `frontend/Controller` and `frontend/Service`; compiling it emits standard JavaScript modules into `public/assets/js`, which browsers load.
 
+All pages load styles from `public/assets/css/global.css`. Theme colors, fonts, spacing, and layout values are defined as CSS custom properties under `:root`; use those variables rather than repeating literal values.
 
-4. **archive.php**: View archived rows. To archive a row, go to edit.php, find the row, and click on 'Archive'. You can then view an overview of all archived rows on archive.php.
+## Local setup
 
+1. Install PHP 8.0 or newer with the PDO SQL Server driver (`pdo_sqlsrv`) enabled.
+2. Install Node.js and npm, then run `npm install` and `npm run build:typescript` from the project root.
+3. Copy `.env.example` to `.env` in the project root. The defaults connect to `(localdb)\MSSQLLocalDB`, database `devices`, using the current Windows account. Ensure that database and the `cabinet_devices` and `field_devices` tables exist in your LocalDB instance.
+4. If using SQL Server authentication, set `PROCONTROL_DB_USER` and `PROCONTROL_DB_PASSWORD` in `.env`. Leave them empty for Windows authentication. The `.env` file is ignored by Git; environment variables already set by your system take precedence over values in `.env`.
+5. From the project root, start PHP's development server with `php -S localhost:8000 -t public`.
+6. Open `http://localhost:8000`.
 
+After changing TypeScript files, run `npm run build:typescript` to regenerate the browser modules. Run `npm run check:typescript` to type-check without writing output.
 
-Feel free to explore and utilize the Quote's website functionalities for efficient management of cabinet and field device data in your Excel quotes.
+Database dumps and device/catalog CSVs contain local data and are intentionally excluded from Git. For a fresh checkout, obtain an approved SQL Server schema/import script and any required data through your organization's authorized channel. If you already have the local `database/sqlserver-devices.sql` file, it can be run in SQL Server Management Studio against an empty `devices` database; it stops if either target table already exists.
 
-# Code Documentation
+The root `devices.sql` file is a MariaDB/MySQL export and is not compatible with SQL Server. Do not run it in SQL Server.
 
-This documentation provides insights into the structure and functionality of the code, primarily built using PHP, HTML, and JS.
+## Existing URLs
 
-## index.php
+- `index.php` — home
+- `add.php` — add a record
+- `Edit.php` — active records
+- `archive.php` — archived records
+- `edit_single_cabinet.php` and `edit_single_field.php` — edit a record
+- `archive_single_cabinet.php` and `archive_single_field.php` — archive/restore record details
+- `get_category_data.php`, `get_category_price.php`, and `insert_data.php` — device form endpoints
+- `get_instrument_data.php` — legacy alias for the instrument-price endpoint
 
-The `index.php` file utilizes the Navbar() and Footer() functions, which are sourced from the './function/function.php' file (line 5). The 'include' statement imports code from 'function.php' into 'index.php', promoting modularity. The code's architecture allows for seamless integration of these functions into any file without the need for individual edits.
+`archive_single.php` remains as an alias for cabinet archive details. `get_instrument_data.php` remains as a legacy alias for the instrument-price endpoint. `Style.css` remains as a legacy stylesheet alias.
 
-
-
-## function.php
-
-The `function.php` file contains the code for the Navbar() and Footer() functions encapsulated within their respective functions. This approach enables easy calling of these functions across different files, enhancing code reusability and maintainability.
-
-## add.php
-
-The `add.php` file incorporates the InsertData() function, responsible for transmitting data from the HTML form to the Microsoft server. The HTML code within the `<form>` section contains input fields necessary for creating a new record. The InsertData() function binds HTML input fields to SQL table columns and establishes a connection with the database using the DBconnect() function.
-
-## function InsertData()
-
-The `InsertData()` function transfers data from HTML input fields to a MySQL database. It dynamically retrieves input field names, binds variables to corresponding SQL table columns, and inserts data into the specified table. The presence of the `DBconnect()` function establishes the connection between the code and the database.
-
-## edit.php
-
-The `edit.php` file employs the `displayTable()` function to generate an HTML table showcasing non-archived records from a specified MySQL table. This function enhances user interaction by dynamically adjusting table headers for sorting, providing "Edit" links, and offering "Archive" or "Restore" links based on archival status.
-
-## display the tables cabinet / field devices
-
-The code to display the tables `cabinet_devices` and `field_devices` is within the `displayTable()` function, generating an HTML table for organized presentation of data.
-
-## archive.php
-
-The `archive.php` file features the `displayArchivedDevices()` function, displaying archived devices of a given type. With dynamic sorting options and a user-friendly interface, this function constructs and executes SQL queries to fetch archived records. Each row in the HTML table includes device details and links for user actions such as "Edit" and "Restore."
+The edit, archive, list, and create pages use the device service for database operations. Keep SQL in backend services when extending the application; page templates should handle presentation, not database connections or queries.
